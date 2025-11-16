@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Depot;
-use App\Employee;
-use App\DepotUser;
-use App\Designation;
-use App\Department;
-use App\OfficeLocation;
-use App\Region;
-use App\Section;
-use App\DistributorUser;
+use App\Models\Depot;
+use App\Models\Employee;
+use App\Models\DepotUser;
+use App\Models\Designation;
+use App\Models\Department;
+use App\Models\OfficeLocation;
+use App\Models\Region;
+use App\Models\Section;
+use App\Models\DistributorUser;
 use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
-use App\Role;
-use App\User;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;

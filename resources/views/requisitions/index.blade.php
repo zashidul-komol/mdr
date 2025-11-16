@@ -52,11 +52,11 @@
                       <tr>
                         <td>{{$i}}</td>
                         <td>{{$data->id}}</td>
-                        <td>{{$data->region->name or ''}}</td>
-                        <td>{{$data->distributor->distributorName or ''}}</td>
-                        <td>{{$data->application_details[0]->applicant_name or ''}}</td>
-                        <td>{{$data->application_details[0]->applicant_education or ''}}</td>
-                        <td>{{$data->created_at or ''}}</td>
+                        <td>{{$data->region->name  ??  ''}}</td>
+                        <td>{{$data->distributor->distributorName  ??  ''}}</td>
+                        <td>{{$data->application_details[0]->applicant_name  ??  ''}}</td>
+                        <td>{{$data->application_details[0]->applicant_education  ??  ''}}</td>
+                        <td>{{$data->created_at  ??  ''}}</td>
                         <td>                               
                             <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->id }})"></a>                          
                         </td>

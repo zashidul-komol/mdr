@@ -60,14 +60,14 @@
                         <td>{{$i}}</td>
                         <td>{{$data->application_id}}</td>
                         <td>{{$data->mdr_idcard}}</td>
-                        <td>{{$data->depots->name or ''}}</td>
-                        <td>{{$data->regions->name or ''}}</td>
-                        <td>{{$data->distributors->distributorName or ''}}</td>
-                        <td>{{$data->applicant_name or ''}}</td>
-                        <td>{{$data->applicant_mobile or ''}}</td>
-                        <td>{{$data->applicant_education or ''}}</td>
-                        <td>{{$data->basic_salary or ''}}</td>
-                        <td>{{$data->effectivedate or ''}}</td>
+                        <td>{{$data->depots->name  ??  ''}}</td>
+                        <td>{{$data->regions->name  ??  ''}}</td>
+                        <td>{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td>{{$data->applicant_name  ??  ''}}</td>
+                        <td>{{$data->applicant_mobile  ??  ''}}</td>
+                        <td>{{$data->applicant_education  ??  ''}}</td>
+                        <td>{{$data->basic_salary  ??  ''}}</td>
+                        <td>{{$data->effectivedate  ??  ''}}</td>
                         <td>
                           {!!  Html::decode(link_to_route('requisitions.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->application_id)))!!}
                         </td>

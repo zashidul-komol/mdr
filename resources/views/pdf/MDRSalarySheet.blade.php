@@ -107,19 +107,19 @@ table {
                             
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td align="left">{{$data->distributors->distributorName or ''}}</td>
-                                <td align="left">{{$data->mdrInformations->mdr_idcard or ''}}</td>
-                                <td align="left">{{$data->mdrInformations->applicant_name or ''}}</td>
-                                <td align="left">{{$data->depots->name or ''}}</td>
-                                <td align="left">{{$data->mdrInformations->applicant_mobile or ''}}</td>
-                                <td align="center">{{$data->mdrInformations->effectivedate or ''}}</td>
-                                <td align="center">{{$data->month_days or ''}}</td>
-                                <td align="center">{{$data->working_days or ''}}</td>
-                                <td align="center">{{$data->authorized_leave or ''}}</td>
-                                <td align="center">{{$data->unauthorized_leave or ''}}</td>
-                                <td align="center">{{$data->weekly_holiday or ''}}</td>
-                                <td align="center">{{$data->govt_holiday or ''}}</td>
-                                <td align="center">{{$data->eid_duty or ''}}</td>
+                                <td align="left">{{$data->distributors->distributorName  ??  ''}}</td>
+                                <td align="left">{{$data->mdrInformations->mdr_idcard  ??  ''}}</td>
+                                <td align="left">{{$data->mdrInformations->applicant_name  ??  ''}}</td>
+                                <td align="left">{{$data->depots->name  ??  ''}}</td>
+                                <td align="left">{{$data->mdrInformations->applicant_mobile  ??  ''}}</td>
+                                <td align="center">{{$data->mdrInformations->effectivedate  ??  ''}}</td>
+                                <td align="center">{{$data->month_days  ??  ''}}</td>
+                                <td align="center">{{$data->working_days  ??  ''}}</td>
+                                <td align="center">{{$data->authorized_leave  ??  ''}}</td>
+                                <td align="center">{{$data->unauthorized_leave  ??  ''}}</td>
+                                <td align="center">{{$data->weekly_holiday  ??  ''}}</td>
+                                <td align="center">{{$data->govt_holiday  ??  ''}}</td>
+                                <td align="center">{{$data->eid_duty  ??  ''}}</td>
                                 <td align="right">{{number_format($data['salary'],2)}}</td> 
                             </tr>
                                 

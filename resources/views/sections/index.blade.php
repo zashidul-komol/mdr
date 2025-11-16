@@ -37,12 +37,19 @@
                         @foreach ($sections as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->department->name or ''}}</td>
-                        <td>{{$data->name or ''}}</td>
+                      	<td>{{$data->department->name  ??  ''}}</td>
+                        <td>{{$data->name  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('sections.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('sections.destroy',array($data->id))) !!}
+
+                         <form action="{{ route('sections.destroy', $data->id) }}" method="POST" 
+      id="deleteForm" style="display: inline;">
+    @csrf
+    @method('DELETE')
+</form>
+
+<i aria-hidden="true" class="fa fa-remove fa-x" onclick="if(confirm('Are you sure you want to delete this section?')) document.getElementById('deleteForm').submit();"></i>
                         </td>
                       </tr>
                         @php ($i=$i+1)

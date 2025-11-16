@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Distributor;
-use App\Employee;
-use App\Region;
-use App\Depot;
+use App\Models\Distributor;
+use App\Models\Employee;
+use App\Models\Region;
+use App\Models\Depot;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\User;
+use App\Models\User;
 use Auth;
 
 class DistributorsController extends Controller

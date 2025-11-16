@@ -102,20 +102,20 @@ h2 span{
                         @foreach ($AttendanceReport as $key=>$data)
                       <tr>
                         <td align="left">{{$key+1}}</td>
-                        <td align="left">{{$data->distributors->distributorName or ''}}</td>
-                        <td align="left">{{$data->mdrInformations->mdr_idcard or ''}}</td>
-                        <td align="left">{{$data->mdrInformations->applicant_name or ''}}</td>
-                        <td align="left">{{$data->mdrInformations->applicant_mobile or ''}}</td>
-                        <td align="center">{{$data->mdrInformations->effectivedate or ''}}</td>
-                        <td align="center">{{$data->working_days or ''}}</td>
-                        <td align="center">{{$data->authorized_leave or ''}}</td>
-                        <td align="center">{{$data->unauthorized_leave or ''}}</td>
-                        <td align="center">{{$data->extra_duty or ''}}</td>
+                        <td align="left">{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td align="left">{{$data->mdrInformations->mdr_idcard  ??  ''}}</td>
+                        <td align="left">{{$data->mdrInformations->applicant_name  ??  ''}}</td>
+                        <td align="left">{{$data->mdrInformations->applicant_mobile  ??  ''}}</td>
+                        <td align="center">{{$data->mdrInformations->effectivedate  ??  ''}}</td>
+                        <td align="center">{{$data->working_days  ??  ''}}</td>
+                        <td align="center">{{$data->authorized_leave  ??  ''}}</td>
+                        <td align="center">{{$data->unauthorized_leave  ??  ''}}</td>
+                        <td align="center">{{$data->extra_duty  ??  ''}}</td>
                         <td align="right">{{number_format($data['salary'],2)}}</td>
-                        <td align="right">{{$data->off_day_bill or ''}}</td>
-                        <td align="center">{{$data->travelling_allowance or ''}}</td>
-                        <td align="center">{{$data->dearness_allowance or ''}}</td>
-                        <td align="right">{{$data->mobile_bill or ''}}</td>
+                        <td align="right">{{$data->off_day_bill  ??  ''}}</td>
+                        <td align="center">{{$data->travelling_allowance  ??  ''}}</td>
+                        <td align="center">{{$data->dearness_allowance  ??  ''}}</td>
+                        <td align="right">{{$data->mobile_bill  ??  ''}}</td>
                         <td align="right">{{number_format($data['gross_salary'],2)}}</td>
                         
                         

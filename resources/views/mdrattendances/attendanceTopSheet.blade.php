@@ -84,7 +84,7 @@ textarea:valid {
 
         $('.datepicker').datepicker({ format: "yyyy-mm-dd",todayHighlight: true,autoclose:true});
 
-        //get shops or distributor
+        //get shops  ??  distributor
         function getExecutiveDepotShop(depotId){
           $('#shop-list').html('');
           $.ajax({

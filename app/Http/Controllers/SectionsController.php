@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Section;
-use App\Department;
+use App\Models\Section;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class SectionsController extends Controller

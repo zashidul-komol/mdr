@@ -48,7 +48,11 @@
                             @endif
                             <td>
                               {!!  Html::decode(link_to_route('zones.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id,$param?$param:'')))!!}
-                              {!! Form::delete(route('zones.destroy',array($data->id,'level'=>$param))) !!}
+                              <form action="{{ route('zones.destroy', array($data->id,'level'=>$param)) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this zone?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                             </td>
                           </tr>
                           @php ($i=$i+1)

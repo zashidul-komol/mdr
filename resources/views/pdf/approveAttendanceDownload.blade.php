@@ -76,9 +76,9 @@ h2 span{
                     <span class="title" style="width: 15%">Requisition  #  </span>
                     <span class="data no-border" style="width: 8%">{{$id}}</span>
                     <span class="title" style="width: 12%">Department :  </span>
-                    <span class="data no-border" style="width: 25%">{{$RequisitionDetails[0]->department->name or ''}}</span>
+                    <span class="data no-border" style="width: 25%">{{$RequisitionDetails[0]->department->name  ??  ''}}</span>
                     <span class="title" style="width: 10%">Section :  </span>
-                    <span class="data no-border" style="width: 15%">{{$RequisitionDetails[0]->section->name or ''}}</span>
+                    <span class="data no-border" style="width: 15%">{{$RequisitionDetails[0]->section->name  ??  ''}}</span>
                     <span class="title" style="width: 5%">Date :  </span>
                     <span class="data no-border" style="width: 10%">{{\Carbon\Carbon::parse($requisitionDate[0]->date)->format('d-m-Y H:i:s') }}</span>
 
@@ -116,7 +116,7 @@ h2 span{
                       <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$subcategories[$key][0]}}</td>
-                        <td>{{ $data->product->name or '' }}</td>
+                        <td>{{ $data->product->name  ??  '' }}</td>
                         <td>
 
                           @if(isset($particulars[$key]) && !empty($particulars[$key][0]))
@@ -130,8 +130,8 @@ h2 span{
                         <td align="center">{{$consumptions[$key]}}</td>
                         <td align="right">{{ number_format($data['unitprice'],0) }}</td>
                         <td align="right">{{ number_format($data['totalprice'],0) }}</td>
-                        <td align="center">{{ $data->present_stock or '' }}</td>
-                        <td>{{ $data->remarks or '' }}</td>
+                        <td align="center">{{ $data->present_stock  ??  '' }}</td>
+                        <td>{{ $data->remarks  ??  '' }}</td>
                         
                       </tr>
                         @endforeach
@@ -185,10 +185,10 @@ h2 span{
                         @foreach ($RequisitionLogs as $key=>$data)
                       <tr>
                         <td width="5%">{{$key+1}}</td>
-                        <td width="15%">{{ $data->action_name or '' }}</td>
+                        <td width="15%">{{ $data->action_name  ??  '' }}</td>
                         <td width="2%">:</td>
-                        <td width="20%%">{{ $data->user->name or '' }}</td>
-                        <td width="58%">{{$data->comments or ''}}</td>
+                        <td width="20%%">{{ $data->user->name  ??  '' }}</td>
+                        <td width="58%">{{$data->comments  ??  ''}}</td>
                       </tr>
                         @endforeach
                     </tbody>

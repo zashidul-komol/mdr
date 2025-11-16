@@ -5,25 +5,14 @@ return [
 		'active' => 'Active',
 		'inactive' => 'Inactive',
 	],
-	'rating' => [
-		'1' => '1',
-		'2' => '2',
-		'3' => '3',
-		'4' => '4',
-		'5' => '5',
-	],
-	'appearance' => [
-		'Appearance-1' => 'Appearance-1',
-		'Appearance-2' => 'Appearance-2',
-		'Appearance-3' => 'Appearance-3',
-		'Appearance-4' => 'Appearance-4',
-		'Appearance-5' => 'Appearance-5',
+	'availability' => [
+		'yes' => 'Yes',
+		'no' => 'No',
 	],
 	'menu' => [
-	    'configaration' => ['SiteSettingsController', 'LocationsController', 'ZonesController', 'DesignationsController' , 'DepartmentsController', 'OfficeLocationsController', 'RegionsController','StagingsController', 'SectionsController', 'VehiclesController', 'MachinesController', 'EmployeesController', 'CategoriesController', 'SubcategoriesController', 'ProductsController', 'MeasurementsController', 'DistributorsController', 'HolidaysController'],
+	    'configaration' => ['SiteSettingsController', 'LocationsController', 'ZonesController', 'DesignationsController' , 'DepartmentsController', 'OfficeLocationsController', 'RegionsController','StagingsController', 'SectionsController', 'VehiclesController', 'MachinesController', 'EmployeesController', 'CategoriesController', 'SubcategoriesController', 'ProductsController', 'MeasurementsController'],
 		'user' => ['RolesController', 'RegisterController'],
-	    'requisition' => ['RequisitionsController', 'DesignationsController', 'ReportingsequenceController', 'MDRAttendancesController'],
-	    'merchandiser' => ['MerchandisersController', 'RequisitionsController', 'DesignationsController', 'ReportingsequenceController', 'MDRAttendancesController' ],
+	    'requisition' => ['RequisitionsController', 'DesignationsController', 'ReportingsequenceController'],
 		'report' => ['InventoryReportsController', 'ServiceReportsController'],
 		
 	],
@@ -42,7 +31,7 @@ return [
 		'machines' => 'Machine',
 		'vehicles' => 'Vehicle',
 		'employees' => 'Employee',
-		'staionaries' => 'Staionary',
+		'staionaries' => 'Stationery',
 	],
 	'freeze_service_status' => [
 	],

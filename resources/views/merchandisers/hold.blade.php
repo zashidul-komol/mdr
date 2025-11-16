@@ -48,11 +48,11 @@
                         @foreach ($reportToRequisitions as $data)
                       <tr>
                         <td>{{$i}}</td>
-                        <td>{{$data->id or ''}}</td>
-                        <td>{{$data->user->name or ''}}</td>
-                        <td>{{$data->department->name or ''}}</td>
-                        <td>{{$data->section->name or ''}}</td>
-                        <td>{{$data->date or ''}}</td>
+                        <td>{{$data->id  ??  ''}}</td>
+                        <td>{{$data->user->name  ??  ''}}</td>
+                        <td>{{$data->department->name  ??  ''}}</td>
+                        <td>{{$data->section->name  ??  ''}}</td>
+                        <td>{{$data->date  ??  ''}}</td>
                         <td>                               
                             <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->id }})"></a>                          
                         </td>

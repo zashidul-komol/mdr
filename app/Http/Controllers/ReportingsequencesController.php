@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\ReportingSequence;
-use App\User;
-use App\Department;
+use App\Models\ReportingSequence;
+use App\Models\User;
+use App\Models\Department;
 use App\ReportingSequenceDetail;
 use Illuminate\Support\Facades\DB;
 

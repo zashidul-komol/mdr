@@ -40,15 +40,20 @@
                         @foreach ($products as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->name or ''}}</td>
-                        <td>{{$data->code or ''}}</td>
-                        <td>{{$data->category->name or ''}}</td>
-                        <td>{{$data->subcategory->name or ''}}</td>
-                        <td>{{$data->department->name or ''}}</td>
+                      	<td>{{$data->name  ??  ''}}</td>
+                        <td>{{$data->code  ??  ''}}</td>
+                        <td>{{$data->category->name  ??  ''}}</td>
+                        <td>{{$data->subcategory->name  ??  ''}}</td>
+                        <td>{{$data->department->name  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('products.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('products.destroy',array($data->id))) !!}
+
+                          <form action="{{ route('products.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

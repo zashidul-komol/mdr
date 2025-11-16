@@ -42,8 +42,13 @@
                         <th>Actions</th>
                         <th>
 				           {!! Html::decode(link_to_route('stages.edit', '<i aria-hidden="true" class="fa fa-edit fa-x"></i>', array($module,$value->id))) !!}
-				           {!! Form::delete(route('stages.destroy',array($module,$value->id)),'<i aria-hidden="true" class="fa fa-remove"></i>') !!}
-                        </th>
+				           
+                     <form action="{{ route('designations.destroy', $data->id) }}" method="POST" class="d-inline">
+                              @csrf
+                              @method('DELETE')
+                              <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this designation?')">Delete</button>
+                          </form>
+                  </th>
                       </tr>
                     </thead>
 
@@ -51,7 +56,7 @@
                     @foreach($value['stage_details'] as $vl)
                       <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
-                        <td>{{$vl->designation->short_name or ''}}</td>
+                        <td>{{$vl->designation->short_name  ??  ''}}</td>
                         <td class="text-capitalize">
                         	@php
                         		$actionsArr = json_decode($vl->actions,true);

@@ -69,7 +69,7 @@
                         @foreach ($MdrInformations as $data)
                       <tr>
                         <td>{{$i}}</td>
-                        <td>{{$data->merchandiser_informations->applicant_name or ''}}</td>
+                        <td>{{$data->merchandiser_informations->applicant_name  ??  ''}}</td>
                         <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td>{{Form::text('month_days[]',$data->month_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td>{{Form::text('authorized_leave[]',$data->authorized_leave,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
@@ -99,11 +99,11 @@
                         @foreach ($AttendanceLogs as $key=>$data)
                       <tr>
                         <td width="2%">{{$key+1}}</td>
-                        <td width="12%">{{ $data->action_name or '' }}</td>
+                        <td width="12%">{{ $data->action_name  ??  '' }}</td>
                         <td width="1%">:</td>
-                        <td width="15%%">{{ $data->user->name or '' }}</td>
-                        <td width="15%%">{{ $data->created_at or '' }}</td>
-                        <td width="55%">{{$data->comments or ''}}</td>
+                        <td width="15%%">{{ $data->user->name  ??  '' }}</td>
+                        <td width="15%%">{{ $data->created_at  ??  '' }}</td>
+                        <td width="55%">{{$data->comments  ??  ''}}</td>
                       </tr>
                         @endforeach
                     </tbody>

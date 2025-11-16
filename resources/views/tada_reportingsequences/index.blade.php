@@ -37,10 +37,10 @@
                         @foreach ($tada_reportingsequences as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->user->name or ''}}</td>
-                        <td>{{$data->user->designation->title or ''}}</td>
-                        <td>{{$data->user->department->name or ''}}</td>
-                        <td>{{$data->user->section->name or ''}}</td>
+                      	<td>{{$data->user->name  ??  ''}}</td>
+                        <td>{{$data->user->designation->title  ??  ''}}</td>
+                        <td>{{$data->user->department->name  ??  ''}}</td>
+                        <td>{{$data->user->section->name  ??  ''}}</td>
                         <td>                               
                             <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->user->id }})"></a>                          
                         </td>

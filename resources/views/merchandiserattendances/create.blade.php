@@ -70,8 +70,8 @@
                         @foreach ($MdrInformations as $data)
                       <tr>
                         <td>{{$i}}</td>
-                        <td>{{$data->distributors->distributorName or ''}}</td>
-                        <td>{{$data->applicant_name or ''}}</td>
+                        <td>{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td>{{$data->applicant_name  ??  ''}}</td>
                         <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td hidden="true">{{Form::text('basic_salary[]',$data->basic_salary,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td hidden="true">{{Form::text('Monthly_Total_Holidays[]',$Monthly_Total_Holidays,array('class' => 'form-control', 'readonly' => 'true', 'id'=>'Monthly_Total_Holidays'.$i))}}</td>
@@ -119,7 +119,7 @@
 
         $('.datepicker').datepicker({ format: "yyyy-mm-dd",todayHighlight: true,autoclose:true});
 
-        //get shops or distributor
+        //get shops  ??  distributor
         function getExecutiveDepotShop(depotId){
           $('#shop-list').html('');
           $.ajax({

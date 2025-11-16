@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -60,6 +60,14 @@ class LoginController extends Controller {
 			->withInput($request->only($this->username(), 'remember'))
 			->withErrors($errors);
 	}
+
+	/**
+     * Override to use 'username' instead of 'email'
+     */
+    public function username()
+    {
+        return 'username'; // or 'user_name' or whatever your DB field is
+    }
 
 	
 }

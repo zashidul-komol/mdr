@@ -36,11 +36,15 @@
                         @foreach ($regions as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->name or ''}}</td>
+                      	<td>{{$data->name  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('regions.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('regions.destroy',array($data->id))) !!}
+                          <form action="{{ route('regions.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this region?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

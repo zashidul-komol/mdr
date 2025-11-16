@@ -41,7 +41,7 @@
 	<div style="height:00px">&nbsp;</div>
     <h1 class="text-center mainTitle"><span>Appointment Letter</span></h1>
     <div class="cTr pb-sm">
-    	<div class="fl" style="width:75%;">Ref. DIIL/HR/{{$AppointmentLetter[0]->distributor->dbcode or 'Null'}}/{{$AppointmentLetter[0]->updated_at->format('Y')}}/{{$id}} </div> 
+    	<div class="fl" style="width:75%;">Ref. DIIL/HR/{{$AppointmentLetter[0]->distributor->dbcode  ??  'Null'}}/{{$AppointmentLetter[0]->updated_at->format('Y')}}/{{$id}} </div> 
 	    <div class="fl" style="width:25%;">Date: {{$AppointmentLetter[0]->updated_at->format('d-M-Y')}} </div>   		
 	</div>
 	</div>

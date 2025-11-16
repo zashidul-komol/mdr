@@ -1,21 +1,21 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\DfReturnLog;
-use App\Location;
-use App\RequisitionLog;
-use App\Shop;
-use App\SmsPromotional;
-use App\Department;
-use App\Section;
-use App\Product;
-use App\Subcategory;
-use App\Traits\AjaxForInventory;
-use App\Traits\AjaxForReport;
-use App\Traits\AjaxForRequisition;
-use App\Traits\AjaxForReturn;
-use App\Traits\AjaxForService;
-use App\Zone;
+use App\Models\DfReturnLog;
+use App\Models\Location;
+use App\Models\RequisitionLog;
+use App\Models\Shop;
+use App\Models\SmsPromotional;
+use App\Models\Department;
+use App\Models\Section;
+use App\Models\Product;
+use App\Models\Subcategory;
+use App\Models\Traits\AjaxForInventory;
+use App\Models\Traits\AjaxForReport;
+use App\Models\Traits\AjaxForRequisition;
+use App\Models\Traits\AjaxForReturn;
+use App\Models\Traits\AjaxForService;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use DB;
@@ -255,7 +255,7 @@ class AjaxController extends Controller {
 			'avatar' => 'mimes:jpeg,jpg,png|max:1024',
 		]);
 
-		$user = \App\User::find(auth()->id());
+		$user = \App\Models\User::find(auth()->id());
 		$old_image = $user->avatar;
 		$upload = $request->file('avatar');
 		$directory = '../public' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'avatar' . DIRECTORY_SEPARATOR;

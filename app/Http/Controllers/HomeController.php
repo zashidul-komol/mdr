@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 
-use App\Location;
-use App\Designation;
-use App\Requisition;
-use App\User;
-use App\Application;
-use App\Attendance;
-use App\MdrInformation;
-use App\Role;
-use App\Product;
-use App\CustomerComplain;
-use App\CustomerComplainLog;
-use App\CustomerComplainType;
+use App\Models\Location;
+use App\Models\Designation;
+use App\Models\Requisition;
+use App\Models\User;
+use App\Models\Application;
+use App\Models\Attendance;
+use App\Models\MdrInformation;
+use App\Models\Role;
+use App\Models\Product;
+use App\Models\CustomerComplain;
+use App\Models\CustomerComplainLog;
+use App\Models\CustomerComplainType;
 use App\Traits\HasStageExists;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
-use App\Employee;
+use App\Models\Employee;
 
 class HomeController extends Controller {
 	use HasStageExists;

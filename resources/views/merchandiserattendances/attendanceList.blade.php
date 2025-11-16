@@ -44,11 +44,11 @@
                         @foreach ($reportToRequisitions as $data)
                       <tr>
                         <td>{{$i}}</td>
-                        <td>{{$data->user->name or ''}}</td>
-                        <td>{{$data->depots->name or ''}}</td>
-                        <td>{{$data->months->name or ''}}</td>
-                        <td>{{$data->year or ''}}</td>
-                        <td>{{$data->date or ''}}</td>
+                        <td>{{$data->user->name  ??  ''}}</td>
+                        <td>{{$data->depots->name  ??  ''}}</td>
+                        <td>{{$data->months->name  ??  ''}}</td>
+                        <td>{{$data->year  ??  ''}}</td>
+                        <td>{{$data->date  ??  ''}}</td>
                         <td>                               
                             {!!  Html::decode(link_to_route('merchandiserattendances.attendanceview', '<span aria-hidden="true" class="fa fa-eye fa-x"></span>', array($data->id)))!!}
 

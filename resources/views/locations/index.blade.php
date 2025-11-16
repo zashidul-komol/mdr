@@ -40,15 +40,19 @@
                           <tr>
                             <td>{{$i}}</td>
                              @if ($param=='1')
-                            	<td>{{$data->parent->name or ''}}</td>
+                            	<td>{{$data->parent->name  ??  ''}}</td>
                             @elseif($param=='2')
-                            	<td>{{$data->parent->parent->name or ''}}</td>
-                            	<td>{{$data->parent->name or ''}}</td>
+                            	<td>{{$data->parent->parent->name  ??  ''}}</td>
+                            	<td>{{$data->parent->name  ??  ''}}</td>
                             @endif
                             <td>{{$data->name}}</td>
                             <td>
                               {!!  Html::decode(link_to_route('locations.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id,$param?$param:'')))!!}
-                              {!! Form::delete(route('locations.destroy',array($data->id,'level'=>$param))) !!}
+                              <form action="{{ route('locations.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this location?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                             </td>
                           </tr>
                           @php ($i=$i+1)

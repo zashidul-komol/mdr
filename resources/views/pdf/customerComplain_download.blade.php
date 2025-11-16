@@ -28,12 +28,12 @@
   </tr>
   <tr>
     <td height="25">Date of receiving of the complaint</td>
-    <td colspan="3">{{ $CustomerComplains[0]->complain_date or '' }}</td>
+    <td colspan="3">{{ $CustomerComplains[0]->complain_date  ??  '' }}</td>
   </tr>
   
   <tr>
     <td height="24">Name of the Complainant</td>
-    <td colspan="3">{{ $CustomerComplains[0]->complainant_name or '' }}</td>
+    <td colspan="3">{{ $CustomerComplains[0]->complainant_name  ??  '' }}</td>
   </tr>
   @if(isset($CustomerComplains[0]))
     @php
@@ -45,21 +45,21 @@
     @endphp
   <tr>
     <td height="49">Address complainant Personnel</td>
-    <td colspan="3">{{ $newAddress or '' }}</td>
+    <td colspan="3">{{ $newAddress  ??  '' }}</td>
   </tr>
   @endif
   <tr>
     <td height="24">Email complainant Personnel</td>
-    <td colspan="3">{{ $CustomerComplains[0]->complainant_email or '' }}</td>
+    <td colspan="3">{{ $CustomerComplains[0]->complainant_email  ??  '' }}</td>
   </tr>
   <tr>
     <td height="23">Telephone number of the Complainant</td>
-    <td colspan="3">{{ $CustomerComplains[0]->complainant_mobile or '' }}</td>
+    <td colspan="3">{{ $CustomerComplains[0]->complainant_mobile  ??  '' }}</td>
   </tr>
   
   <tr>
     <td height="22">Ways of Sending the Complaint</td>
-    <td colspan="3">{{ $CustomerComplains[0]->sending_ways or '' }}</td>
+    <td colspan="3">{{ $CustomerComplains[0]->sending_ways  ??  '' }}</td>
   </tr>
   {{$CustomerComplainLogs}}
   
@@ -125,7 +125,7 @@
         <td>Note : This is a computer generated process, so no required any signature.</td>
     </tr>
     <tr>
-        <td>Complain Number : {{$CustomerComplains[0]->id or ''}}</td>
+        <td>Complain Number : {{$CustomerComplains[0]->id  ??  ''}}</td>
     </tr>
 </table>
 </body>

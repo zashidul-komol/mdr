@@ -61,17 +61,17 @@
                         <td>{{$i}}</td>
                         <td>{{$data->application_id}}</td>
                         <td>{{$data->mdr_idcard}}</td>
-                        <td>{{$data->depots->name or ''}}</td>
-                        <td>{{$data->regions->name or ''}}</td>
-                        <td>{{$data->distributors->distributorName or ''}}</td>
-                        <td>{{$data->applicant_name or ''}}</td>
-                        <td>{{$data->applicant_education or ''}}</td>
-                        <td>{{$data->effectivedate or ''}}</td>
-                        <td>{{$data->created_at or ''}}</td>
-                        <td>{{$data->inactiveDate or ''}}</td>
-                        <td>{{$data->inactivereason or ''}}</td>
+                        <td>{{$data->depots->name  ??  ''}}</td>
+                        <td>{{$data->regions->name  ??  ''}}</td>
+                        <td>{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td>{{$data->applicant_name  ??  ''}}</td>
+                        <td>{{$data->applicant_education  ??  ''}}</td>
+                        <td>{{$data->effectivedate  ??  ''}}</td>
+                        <td>{{$data->created_at  ??  ''}}</td>
+                        <td>{{$data->inactiveDate  ??  ''}}</td>
+                        <td>{{$data->inactivereason  ??  ''}}</td>
                         <td>{!! Html::decode(link_to_route('requisitions.resign_letter','<i class="fa fa-upload fa-x" aria-hidden="true"></i>' , [$data->id],['title'=>'Upload Resign Letter'])) !!}</td>
-                        <td>{{$data->inactivereason or ''}}</td>
+                        <td>{{$data->inactivereason  ??  ''}}</td>
                       </tr>
                         @php ($i=$i+1)
                         @endforeach

@@ -41,16 +41,21 @@
                         @foreach ($vehicles as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->name or ''}}</td>
-                        <td>{{$data->regNo or ''}}</td>
-                        <td>{{$data->type or ''}}</td>
-                        <td>{{$data->model or ''}}</td>
-                        <td>{{$data->year or ''}}</td>
-                        <td>{{$data->capacity or ''}}</td>
+                      	<td>{{$data->name  ??  ''}}</td>
+                        <td>{{$data->regNo  ??  ''}}</td>
+                        <td>{{$data->type  ??  ''}}</td>
+                        <td>{{$data->model  ??  ''}}</td>
+                        <td>{{$data->year  ??  ''}}</td>
+                        <td>{{$data->capacity  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('vehicles.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('vehicles.destroy',array($data->id))) !!}
+
+                          <form action="{{ route('vehicles.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this vehicle?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

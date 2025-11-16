@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
-use App\Application;
-use App\ApplicationLog;
-use App\ApplicationDetail;
-use App\MdrInformation;
-use App\MdrAttendance;
-use App\Region;
-use App\Depot;
-use App\Month;
-use App\User;
+use App\Models\Employee;
+use App\Models\Application;
+use App\Models\ApplicationLog;
+use App\Models\ApplicationDetail;
+use App\Models\MdrInformation;
+use App\Models\MdrAttendance;
+use App\Models\Region;
+use App\Models\Depot;
+use App\Models\Month;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;

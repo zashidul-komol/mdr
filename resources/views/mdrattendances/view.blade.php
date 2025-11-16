@@ -72,8 +72,8 @@
                         @foreach ($MdrInformations as $data)
                       <tr>
                         <td>{{$i}}</td>
-                        <td>{{$data->distributors->distributorName or ''}}</td>
-                        <td>{{$data->mdrInformations->applicant_name or ''}}</td>
+                        <td>{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td>{{$data->mdrInformations->applicant_name  ??  ''}}</td>
                         <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td>{{Form::text('month_days[]',$data->month_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td>{{Form::text('authorized_leave[]',$data->authorized_leave,array('class' => 'form-control', 'readonly' => 'true'))}}</td>

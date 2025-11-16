@@ -44,10 +44,10 @@
                       <tr>
                         <td>{{$i}}</td>
                         <td>{{$data->id}}</td>
-                        <td>{{$data->merchan_application_details[0]->applicant_name or ''}}</td>
-                        <td>{{$data->depot->name or ''}}</td>
-                        <td>{{$data->merchan_application_details[0]->applicant_education or ''}}</td>
-                        <td>{{$data->created_at or ''}}</td>
+                        <td>{{$data->merchan_application_details[0]->applicant_name  ??  ''}}</td>
+                        <td>{{$data->depot->name  ??  ''}}</td>
+                        <td>{{$data->merchan_application_details[0]->applicant_education  ??  ''}}</td>
+                        <td>{{$data->created_at  ??  ''}}</td>
                         <td>                               
                             <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->id }})"></a>                          
                         </td>

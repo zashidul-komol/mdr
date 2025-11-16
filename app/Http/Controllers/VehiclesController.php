@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Vehicle;
+use App\Models\Vehicle;
 use App\Exports\VehiclesExport;
 use Illuminate\Http\Request;
 use App\Traits\PhpExcelFormater;

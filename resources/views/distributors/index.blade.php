@@ -38,15 +38,19 @@
                         @foreach ($DistributorList as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->distributorName or ''}}</td>
-                        <td>{{$data->dbcode or ''}}</td>
-                        <td>{{$data->region->name or ''}}</td>
-                        <td>{{$data->depot->name or ''}}</td>
-                        <td>{{$data->areaname or ''}}</td>
+                      	<td>{{$data->distributorName  ??  ''}}</td>
+                        <td>{{$data->dbcode  ??  ''}}</td>
+                        <td>{{$data->region->name  ??  ''}}</td>
+                        <td>{{$data->depot->name  ??  ''}}</td>
+                        <td>{{$data->areaname  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('distributors.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('distributors.destroy',array($data->id))) !!}
+                          <form action="{{ route('distributors.destroy', $data->id) }}" method="POST" class="d-inline">
+                              @csrf
+                              @method('DELETE')
+                              <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this distributor?')">Delete</button>
+                          </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

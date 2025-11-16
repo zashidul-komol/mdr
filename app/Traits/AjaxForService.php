@@ -1,31 +1,31 @@
 <?php
 
 namespace App\Traits;
-use App\ComplainType;
-use App\DamageApplication;
-use App\Depot;
-use App\DepotUser;
-use App\DfProblem;
-use App\DistributorUser;
-use App\RequisitionDetail;
-use App\ReportingSequenceDetail;
-use App\TadaReportingSequence;
-use App\TadaReportingSequenceDetail;
-use App\RequisitionLog;
-use App\Application;
-use App\ApplicationLog;
-use App\ApplicationDetail;
-use App\MerchanApplication;
-use App\MerchanApplicationLog;
-use App\MerchanApplicationDetail;
-use App\Item;
-use App\ProblemType;
-use App\Shop;
-use App\Stage;
-use App\Employee;
-use App\Vehicle;
-use App\Machine;
-use App\User;
+use App\Models\ComplainType;
+use App\Models\DamageApplication;
+use App\Models\Depot;
+use App\Models\DepotUser;
+use App\Models\DfProblem;
+use App\Models\DistributorUser;
+use App\Models\RequisitionDetail;
+use App\Models\ReportingSequenceDetail;
+use App\Models\TadaReportingSequence;
+use App\Models\TadaReportingSequenceDetail;
+use App\Models\RequisitionLog;
+use App\Models\Application;
+use App\Models\ApplicationLog;
+use App\Models\ApplicationDetail;
+use App\Models\MerchanApplication;
+use App\Models\MerchanApplicationLog;
+use App\Models\MerchanApplicationDetail;
+use App\Models\Item;
+use App\Models\ProblemType;
+use App\Models\Shop;
+use App\Models\Stage;
+use App\Models\Employee;
+use App\Models\Vehicle;
+use App\Models\Machine;
+use App\Models\User;
 use App\Distributor;
 use Carbon\Carbon;
 
@@ -104,7 +104,7 @@ trait AjaxForService {
 
         $reportingTo_name = [];	
 		foreach($reporting_sequence as $reportingName){
-			$reportingTo_name[] = \App\User::where('id', $reportingName->report_to)
+			$reportingTo_name[] = \App\Models\User::where('id', $reportingName->report_to)
 					->pluck('name');
 				
 		}
@@ -132,7 +132,7 @@ trait AjaxForService {
 
         $reportingTo_name = [];	
 		foreach($reporting_sequence as $reportingName){
-			$reportingTo_name[] = \App\User::where('id', $reportingName->report_to)
+			$reportingTo_name[] = \App\Models\User::where('id', $reportingName->report_to)
 					->pluck('name');
 				
 		}
@@ -301,13 +301,13 @@ trait AjaxForService {
 		$particulars = [];	
 		foreach($RequisitionDetails as $detail){
 			if ($detail->product->tags == 'employees') {
-				$particular = \App\Employee::where('id', $detail->employee_id)
+				$particular = \App\Models\Employee::where('id', $detail->employee_id)
 					->pluck('name');
 				} elseif($detail->product->tags == 'vehicles') {
-					$particular = \App\Vehicle::where('id', $detail->vehicle_id)
+					$particular = \App\Models\Vehicle::where('id', $detail->vehicle_id)
 					->pluck('name');
 				} elseif($detail->product->tags == 'machines'){
-					$particular = \App\Machine::where('id', $detail->machine_id)
+					$particular = \App\Models\Machine::where('id', $detail->machine_id)
 					->pluck('name');
 				} else {
 					$particular = [];	
@@ -317,7 +317,7 @@ trait AjaxForService {
 
 		$subcategories = [];	
 		foreach($RequisitionDetails as $subcategory){
-			$subcategories[] = \App\Subcategory::where('id', $subcategory->product->subcategory_id)
+			$subcategories[] = \App\Models\Subcategory::where('id', $subcategory->product->subcategory_id)
 					->pluck('name');
 				
 		}

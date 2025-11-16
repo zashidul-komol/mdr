@@ -10,8 +10,8 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Events\AfterSheet;
-use App\MdrInformation;
-use App\MdrAttendance;
+use App\Models\MdrInformation;
+use App\Models\MdrAttendance;
 
 
 class MDRSalaryTopSheetExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize, WithEvents {

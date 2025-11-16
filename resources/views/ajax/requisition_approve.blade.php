@@ -24,9 +24,9 @@
                         @endif
                         {!! $errors->first('avatar', '<p class="text-danger">:message</p>' ) !!}
 
-                        <h5 class="profile-username text-center">{{$employees[0]->name or ''}}</h5>
+                        <h5 class="profile-username text-center">{{$employees[0]->name  ??  ''}}</h5>
 
-                        <p class="text-muted text-center">{{$employees[0]->designation->title or ''}}</p>
+                        <p class="text-muted text-center">{{$employees[0]->designation->title  ??  ''}}</p>
 
                       </div>
                 <!-- /.box-body -->
@@ -142,8 +142,8 @@
                       <tr>
                         <td width="24%">{{$data->employee->name}}</td>
                         <td width="1%">:</td>
-                        <td width="20%">{{$data->updated_at or ''}}</td>
-                        <td width="55%">{{$data->remarks or ''}}</td>
+                        <td width="20%">{{$data->updated_at  ??  ''}}</td>
+                        <td width="55%">{{$data->remarks  ??  ''}}</td>
                       </tr>
                         @endforeach
                     </tbody>

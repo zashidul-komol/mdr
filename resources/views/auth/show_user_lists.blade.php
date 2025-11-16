@@ -39,13 +39,13 @@
                           @php ($i=1)
                           @foreach ($users as $data)
                             <tr>
-                            <td>{{$data->name or ''}}</td>
+                            <td>{{$data->name  ??  ''}}</td>
                             <td>{{$data->email}}</td>
                             <td>{{$data->mobile}}</td>
-                            <td>{{$data->username or ''}}</td>
-                            <td>{{$data->designation->title or ''}}</td>
-                            <td>{{$data->officelocation->name or ''}}</td>
-                            <td>{{$data->role->name or ''}}</td>
+                            <td>{{$data->username  ??  ''}}</td>
+                            <td>{{$data->designation->title  ??  ''}}</td>
+                            <td>{{$data->officelocation->name  ??  ''}}</td>
+                            <td>{{$data->role->name  ??  ''}}</td>
                             
                             <td>
                             	 {!!  Html::decode(link_to_route('password.changeUserPassword', '<span aria-hidden="true" class="fa fa-key fa-x"></span>', array($data->id)))!!}

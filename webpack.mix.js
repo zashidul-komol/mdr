@@ -21,8 +21,9 @@ var paths = {
 mix.js('resources/assets/js/app.js', 'public/js/app.js')		
 	.sass('resources/assets/sass/app.scss', 'public/css', {
 		includePaths: [
-			paths.bootstrap + 'stylesheets/'
-		]
+			path.resolve(__dirname, 'node_modules/bootstrap-sass/assets/stylesheets')
+		],
+		implementation: require('node-sass') // Force node-sass
 	}).options({
 		processCssUrls: false
 	}).copyDirectory( paths.bootstrap + 'fonts/bootstrap/', 'public/fonts/bootstrap' );

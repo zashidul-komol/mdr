@@ -36,12 +36,16 @@
                         @foreach ($measurements as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->name or ''}}</td>
-                        <td>{{$data->shortname or ''}}</td>
+                      	<td>{{$data->name  ??  ''}}</td>
+                        <td>{{$data->shortname  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('measurements.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('measurements.destroy',array($data->id))) !!}
+                          <form action="{{ route('measurements.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this measurement?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

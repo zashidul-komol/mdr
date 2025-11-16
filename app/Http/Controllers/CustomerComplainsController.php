@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\CustomerComplain;
-use App\CustomerComplainLog;
-use App\CustomerComplainType;
-use App\Employee;
-use App\Department;
-use App\Designation;
-use App\Region;
-use App\Location;
-use App\Product;
-use App\User;
+use App\Models\CustomerComplain;
+use App\Models\CustomerComplainLog;
+use App\Models\CustomerComplainType;
+use App\Models\Employee;
+use App\Models\Department;
+use App\Models\Designation;
+use App\Models\Region;
+use App\Models\Location;
+use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use App\Mail\ContactMail;
 use App\Mail\CustomerMail;

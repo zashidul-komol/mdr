@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\ReportingSequence;
-use App\TadaReportingSequence;
-use App\User;
-use App\Department;
-use App\ReportingSequenceDetail;
-use App\TadaReportingSequenceDetail;
+use App\Models\ReportingSequence;
+use App\Models\TadaReportingSequence;
+use App\Models\User;
+use App\Models\Department;
+use App\Models\ReportingSequenceDetail;
+use App\Models\TadaReportingSequenceDetail;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;

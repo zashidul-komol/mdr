@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
-use App\Department;
-use App\Designation;
-use App\OfficeLocation;
-use App\Region;
-use App\Depot;
-use App\Section;
+use App\Models\Employee;
+use App\Models\Department;
+use App\Models\Designation;
+use App\Models\OfficeLocation;
+use App\Models\Region;
+use App\Models\Depot;
+use App\Models\Section;
 use App\Exports\EmployeeExport;
 use App\Traits\PhpExcelFormater;
 use Illuminate\Http\Request;

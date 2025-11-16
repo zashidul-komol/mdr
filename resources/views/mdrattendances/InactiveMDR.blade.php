@@ -73,8 +73,8 @@
                         
                       <tr>
                         <td>{{$i}}</td>
-                        <td>{{$data->distributors->distributorName or ''}}</td>
-                        <td>{{$data->applicant_name or ''}}</td>
+                        <td>{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td>{{$data->applicant_name  ??  ''}}</td>
                         <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td hidden="true">{{Form::text('inactiveDate[]',$data->inactiveDate,array('class' => 'form-control', 'readonly' => 'true', 'id'=>'$data->inactiveDate'.$i))}}</td>
                         <td hidden="true">{{Form::text('status[]',$data->status,array('class' => 'form-control', 'readonly' => 'true', 'id'=>'$data->status'.$i))}}</td>
@@ -125,7 +125,7 @@
 
         $('.datepicker').datepicker({ format: "yyyy-mm-dd",todayHighlight: true,autoclose:true});
 
-        //get shops or distributor
+        //get shops  ??  distributor
         function getExecutiveDepotShop(depotId){
           $('#shop-list').html('');
           $.ajax({

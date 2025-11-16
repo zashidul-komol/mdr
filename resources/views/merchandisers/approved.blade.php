@@ -56,12 +56,12 @@
                       <tr>
                         <td>{{$i}}</td>
                         <td>{{$data->id}}</td>
-                        <td>{{$data->depot->name or ''}}</td>
-                        <td>{{$data->region->name or ''}}</td>
-                        <td>{{$data->distributor->distributorName or ''}}</td>
-                        <td>{{$data->application_details[0]->applicant_name or ''}}</td>
-                        <td>{{$data->application_details[0]->applicant_education or ''}}</td>
-                        <td>{{$data->application_details[0]->effectivedate or ''}}</td>
+                        <td>{{$data->depot->name  ??  ''}}</td>
+                        <td>{{$data->region->name  ??  ''}}</td>
+                        <td>{{$data->distributor->distributorName  ??  ''}}</td>
+                        <td>{{$data->application_details[0]->applicant_name  ??  ''}}</td>
+                        <td>{{$data->application_details[0]->applicant_education  ??  ''}}</td>
+                        <td>{{$data->application_details[0]->effectivedate  ??  ''}}</td>
                         <td>                               
                             <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->id }})"></a>  
                             {!! Html::decode(link_to_route('requisitions.approveRequisitionDownload','<span aria-hidden="true" class="fa fa-download fa-x"></span>' , [$data->id],['title'=>'Appointment Letter Download'])) !!} 

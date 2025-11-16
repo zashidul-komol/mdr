@@ -37,12 +37,16 @@
                         @foreach ($officelocations as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->name or ''}}</td>
-                        <td>{{$data->address or ''}}</td>
+                      	<td>{{$data->name  ??  ''}}</td>
+                        <td>{{$data->address  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('officelocations.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('officelocations.destroy',array($data->id))) !!}
+                          <form action="{{ route('officelocations.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this officelocation?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

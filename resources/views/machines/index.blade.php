@@ -37,12 +37,16 @@
                         @foreach ($machines as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->name or ''}}</td>
-                        <td>{{$data->description or ''}}</td>
+                      	<td>{{$data->name  ??  ''}}</td>
+                        <td>{{$data->description  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('machines.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('machines.destroy',array($data->id))) !!}
+                          <form action="{{ route('machines.destroy', $data->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this machine?');">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit">Delete</button>
+                              </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

@@ -1,0 +1,15 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$navbar-padding-horizontal: floor(($grid-gutter-width / 2)) !default;
+$navbar-padding-vertical: (($navbar-height - $line-height-computed) / 2) !default;
+
+// Add other variables that might cause issues
+$line-height-computed: 20px !default;
+$grid-gutter-width: 30px !default;
+$navbar-height: 50px !default;

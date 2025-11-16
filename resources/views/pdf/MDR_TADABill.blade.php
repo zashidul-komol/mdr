@@ -114,31 +114,31 @@ table {
                             @foreach ($AttendanceReport as $key=>$data)
                           <tr>
                             <td width="1%">{{$key+1}}</td>
-                            <td align="left">{{$data->mdrInformations->mdr_idcard or ''}}</td>
-                            <td align="left">{{$data->mdrInformations->applicant_name or ''}}</td>
-                            <td align="left">{{$data->mdrInformations->applicant_mobile or ''}}</td>
-                            <td align="center">{{$data->mdrInformations->effectivedate or ''}}</td>
-                            <td align="center">{{$data->working_days or ''}}</td>
-                            <td align="center">{{$data->meeting_days or ''}}</td>
-                            <td align="center">{{$data->authorized_leave or ''}}</td>
-                            <td align="center">{{$data->unauthorized_leave or ''}}</td>
-                            <td align="center">{{$data->weekly_holiday or ''}}</td>
-                            <td align="center">{{$data->govt_holiday or ''}}</td>
-                            <td align="center">{{$data->eid_duty or ''}}</td>
-                            <td align="center">{{$data->payable_days or ''}}</td>
-                            <td align="center">{{$data->salary or ''}}</td>
-                            <td align="center">{{$data->travelling_allowance or ''}}</td>
-                            <td align="center">{{$data->dearness_allowance or ''}}</td>
-                            <td align="center">{{$data->weekly_holiday_bill or ''}}</td>
-                            <td align="center">{{$data->govt_holiday_bill or ''}}</td>
-                            <td align="center">{{$data->eid_duty_bill or ''}}</td>
-                            <td align="center">{{$data->others_ta_bill or ''}}</td>
-                            <td align="center">{{$data->mobile_bill or ''}}</td>
+                            <td align="left">{{$data->mdrInformations->mdr_idcard  ??  ''}}</td>
+                            <td align="left">{{$data->mdrInformations->applicant_name  ??  ''}}</td>
+                            <td align="left">{{$data->mdrInformations->applicant_mobile  ??  ''}}</td>
+                            <td align="center">{{$data->mdrInformations->effectivedate  ??  ''}}</td>
+                            <td align="center">{{$data->working_days  ??  ''}}</td>
+                            <td align="center">{{$data->meeting_days  ??  ''}}</td>
+                            <td align="center">{{$data->authorized_leave  ??  ''}}</td>
+                            <td align="center">{{$data->unauthorized_leave  ??  ''}}</td>
+                            <td align="center">{{$data->weekly_holiday  ??  ''}}</td>
+                            <td align="center">{{$data->govt_holiday  ??  ''}}</td>
+                            <td align="center">{{$data->eid_duty  ??  ''}}</td>
+                            <td align="center">{{$data->payable_days  ??  ''}}</td>
+                            <td align="center">{{$data->salary  ??  ''}}</td>
+                            <td align="center">{{$data->travelling_allowance  ??  ''}}</td>
+                            <td align="center">{{$data->dearness_allowance  ??  ''}}</td>
+                            <td align="center">{{$data->weekly_holiday_bill  ??  ''}}</td>
+                            <td align="center">{{$data->govt_holiday_bill  ??  ''}}</td>
+                            <td align="center">{{$data->eid_duty_bill  ??  ''}}</td>
+                            <td align="center">{{$data->others_ta_bill  ??  ''}}</td>
+                            <td align="center">{{$data->mobile_bill  ??  ''}}</td>
                             @php
                                 $Total_Salary = $data->travelling_allowance + $data->dearness_allowance + $data->weekly_holiday_bill + $data->govt_holiday_bill + $data->eid_duty_bill + $data->others_ta_bill + $data->mobile_bill;
                             @endphp
                             <td align="center">{{number_format($Total_Salary,0)}}</td>
-                            <td align="right">{{$data->gross_salary or ''}}</td>
+                            <td align="right">{{$data->gross_salary  ??  ''}}</td>
                             
                           </tr>
                             <?php $n++ ?>
@@ -212,12 +212,12 @@ table {
                     <tbody>
                         @foreach ($AttendanceLogs as $key=>$data)
                       <tr>
-                        <td width="5%">{{ $data->action_name or '' }}</td>
+                        <td width="5%">{{ $data->action_name  ??  '' }}</td>
                         <td width="1%"></td>
                         <td width="1%">:</td>
-                        <td width="10%">{{ $data->user->name or '' }}</td>
-                        <td width="10%">{{ $data->user->designation->title or '' }}</td>
-                        <td width="10%">{{ $data->created_at or '' }}</td>
+                        <td width="10%">{{ $data->user->name  ??  '' }}</td>
+                        <td width="10%">{{ $data->user->designation->title  ??  '' }}</td>
+                        <td width="10%">{{ $data->created_at  ??  '' }}</td>
                       </tr>
                         @endforeach
                     </tbody>

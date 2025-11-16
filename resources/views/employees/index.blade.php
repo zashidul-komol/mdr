@@ -41,16 +41,20 @@
                         @foreach ($employees as $data)
                       <tr>
                         <td>{{$i}}</td>
-                      	<td>{{$data->name or ''}}</td>
-                        <td>{{$data->department->name or ''}}</td>
-                        <td>{{$data->section->name or ''}}</td>
-                        <td>{{$data->designation->title or ''}}</td>
-                        <td>{{$data->mobile or ''}}</td>
-                        <td>{{$data->email or ''}}</td>
+                      	<td>{{$data->name  ??  ''}}</td>
+                        <td>{{$data->department->name  ??  ''}}</td>
+                        <td>{{$data->section->name  ??  ''}}</td>
+                        <td>{{$data->designation->title  ??  ''}}</td>
+                        <td>{{$data->mobile  ??  ''}}</td>
+                        <td>{{$data->email  ??  ''}}</td>
                         <td>{{config('myconfig.status')[$data->status] }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('employees.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->id)))!!}
-                          {!! Form::delete(route('employees.destroy',array($data->id))) !!}
+                          <form action="{{ route('employees.destroy', $data->id) }}" method="POST" class="d-inline">
+                              @csrf
+                              @method('DELETE')
+                              <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this employee?')">Delete</button>
+                          </form>
                         </td>
                       </tr>
                         @php ($i=$i+1)

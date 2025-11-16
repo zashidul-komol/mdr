@@ -75,8 +75,8 @@ textarea:valid {
                         @foreach ($MdrInformations as $data)
                       <tr>
                         <td>{{$i}}</td>
-                        <td>{{$data->distributors->distributorName or ''}}</td>
-                        <td>{{$data->applicant_name or ''}}</td>
+                        <td>{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td>{{$data->applicant_name  ??  ''}}</td>
                         <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
                         <td>{{Form::text('working_days[]',$Month_Days,array('class' => 'form-control' , 'readonly' => 'true', 'id'=>'working_days'.$i))}}
                             {!! $errors->first('working_days[]', '<p class="text-danger">:message</p>' ) !!}</td>

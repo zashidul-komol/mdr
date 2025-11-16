@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Product;
-use App\Department;
-use App\Section;
-use App\Category;
-use App\Subcategory;
+use App\Models\Product;
+use App\Models\Department;
+use App\Models\Section;
+use App\Models\Category;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
-use App\Vehicle;
-use App\Machine;
-use App\Employee;
+use App\Models\Vehicle;
+use App\Models\Machine;
+use App\Models\Employee;
 use App\Exports\ProductsExport;
 use App\Traits\PhpExcelFormater;
 use Carbon\Carbon;

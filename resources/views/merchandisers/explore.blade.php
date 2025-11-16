@@ -52,14 +52,14 @@
                         @foreach ($reportToRequisitions as $data)
                       <tr>
                         <td width="5%">{{$i}}</td>
-                        <td width="5%">{{$data->requisition_id or ''}}</td>
-                        <td width="15%">{{$data->product->name or ''}}</td>
-                        <td width="10%">{{$data->product->subcategory->name or ''}}</td>
-                        <td width="15%">{{$data->section->name or ''}}</td>
-                        <td width="10%">{{$data->requisition->date or ''}}</td>
-                        <td align="center" width="5%">{{$data->requsition_quantity or ''}}</td>
-                        <td align="center" width="10%">{{$data->unitprice or ''}}</td>
-                        <td align="center" width="10%">{{$data->totalprice or ''}}</td>
+                        <td width="5%">{{$data->requisition_id  ??  ''}}</td>
+                        <td width="15%">{{$data->product->name  ??  ''}}</td>
+                        <td width="10%">{{$data->product->subcategory->name  ??  ''}}</td>
+                        <td width="15%">{{$data->section->name  ??  ''}}</td>
+                        <td width="10%">{{$data->requisition->date  ??  ''}}</td>
+                        <td align="center" width="5%">{{$data->requsition_quantity  ??  ''}}</td>
+                        <td align="center" width="10%">{{$data->unitprice  ??  ''}}</td>
+                        <td align="center" width="10%">{{$data->totalprice  ??  ''}}</td>
                         <td width="15%">
                             <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->id }})"></a> 
                         </td>

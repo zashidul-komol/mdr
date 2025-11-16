@@ -29,7 +29,7 @@
                       <tr>
                         <td>{{$key+1}}</td>
                         <td>{{$subcategories[$key][0]}}</td>
-                        <td>{{ $data->product->name or '' }}</td>
+                        <td>{{ $data->product->name  ??  '' }}</td>
                         <td>
 
                           @if(isset($particulars[$key]) && !empty($particulars[$key][0]))
@@ -43,9 +43,9 @@
                         <td align="center">{{$consumptions[$key]}}</td>
                         <td align="right">{{ number_format($data['unitprice'],2) }}</td>
                         <td align="right">{{ number_format($data['totalprice'],2) }}</td>
-                        <td align="center">{{ $data->present_stock or '' }}</td>
-                        <td align="center">{{ $data->requiredDate or '' }}</td>
-                        <td>{{ $data->remarks or '' }}</td>
+                        <td align="center">{{ $data->present_stock  ??  '' }}</td>
+                        <td align="center">{{ $data->requiredDate  ??  '' }}</td>
+                        <td>{{ $data->remarks  ??  '' }}</td>
                         
                       </tr>
                         @endforeach
@@ -87,10 +87,10 @@
                         @foreach ($RequisitionLogs as $key=>$data)
                       <tr>
                         <td width="5%">{{$key+1}}</td>
-                        <td width="10%">{{ $data->action_name or '' }}</td>
+                        <td width="10%">{{ $data->action_name  ??  '' }}</td>
                         <td width="1%">:</td>
-                        <td width="20%%">{{ $data->user->name or '' }}</td>
-                        <td width="64%">{{$data->comments or ''}}</td>
+                        <td width="20%%">{{ $data->user->name  ??  '' }}</td>
+                        <td width="64%">{{$data->comments  ??  ''}}</td>
                       </tr>
                         @endforeach
                     </tbody>
