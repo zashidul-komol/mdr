@@ -104,12 +104,12 @@ class SectionsController extends Controller
     {
         //dd ('komol');
         $data = $request->except('_method', '_token');
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|unique:sections,name,' . $id,
             'status' => 'required',
         ]);
 
-        $sections = Section::where('id', $id)->update($data);
+        $sections = Section::whereKey($id)->update($validated);
         if ($sections) {
             $message = "You have successfully updated";
             return redirect()->route('sections.index', [])

@@ -88,13 +88,14 @@ class DepartmentsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except('_method', '_token');
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|unique:departments,name,' . $id,
             'short_name' => 'required|max:10|unique:departments,short_name,' . $id,
             'status' => 'required',
         ]);
 
-        $departments = Department::where('id', $id)->update($data);
+        
+        $departments = Department::whereKey($id)->update($validated);
         if ($departments) {
             $message = "You have successfully updated";
             return redirect()->route('departments.index', [])

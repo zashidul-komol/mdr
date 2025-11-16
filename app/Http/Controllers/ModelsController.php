@@ -70,11 +70,11 @@ class ModelsController extends Controller {
 	 */
 	public function update(Request $request, $id) {
 		$data = $request->except('_method', '_token');
-		$request->validate([
+		$validated = $request->validate([
 			'code' => 'required|unique:models,code,' . $id,
 		]);
 
-		$models = Model::where('id', $id)->update($data);
+		$models = Model::whereKey($id)->update($validated);
 		if ($models) {
 			$message = "You have successfully updated";
 			return redirect()->route('models.index', [])

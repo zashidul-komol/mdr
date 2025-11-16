@@ -58,7 +58,7 @@ class SiteSettingsController extends Controller {
 		}
 		//dd($data);
 		unset($data['old_image']);
-		$site_settings_data = SiteSetting::where('id', $id)->update($data);
+		$site_settings_data = SiteSetting::whereKey($id)->update($validator->validated());
 
 		if ($site_settings_data) {
 			if ($imageName != null) {

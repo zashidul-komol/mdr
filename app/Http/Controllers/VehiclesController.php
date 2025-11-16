@@ -93,12 +93,12 @@ class VehiclesController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except('_method', '_token');
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|unique:vehicles,name,' . $id,
             'status' => 'required',
         ]);
 
-        $vehicles = Vehicle::where('id', $id)->update($data);
+        $vehicles = Vehicle::whereKey($id)->update($validated);
         if ($vehicles) {
             $message = "You have successfully updated";
             return redirect()->route('vehicles.index', [])

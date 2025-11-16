@@ -122,12 +122,12 @@ class DistributorsController extends Controller
     {
         $data = $request->except('_method', '_token');
         //dd($id);
-        $request->validate([
+        $validated = $request->validate([
             'distributorName' => 'required',
             'status' => 'required',
         ]);
 
-        $distributors = Distributor::where('id', $id)->update($data);
+        $distributors = Distributor::whereKey($id)->update($validated);
         if ($distributors) {
             $message = "You have successfully updated";
             return redirect()->route('distributors.index', [])

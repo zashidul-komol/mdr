@@ -88,12 +88,12 @@ class MachinesController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except('_method', '_token');
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|unique:machines,name,' . $id,
             'status' => 'required',
         ]);
 
-        $machines = Machine::where('id', $id)->update($data);
+        $machines = Machine::whereKey($id)->update($validated);
         if ($machines) {
             $message = "You have successfully updated";
             return redirect()->route('machines.index', [])

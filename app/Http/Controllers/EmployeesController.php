@@ -135,12 +135,12 @@ class EmployeesController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except('_method', '_token');
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|unique:employees,name,' . $id,
             'status' => 'required',
         ]);
 
-        $employees = Employee::where('id', $id)->update($data);
+        $employees = Employee::whereKey($id)->update($validated);
         if ($employees) {
             $message = "You have successfully updated";
             return redirect()->route('employees.index', [])

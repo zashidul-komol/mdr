@@ -63,12 +63,12 @@ class MeasurementsController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->except('_method', '_token');
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|unique:measurements,name,' . $id,
             'status' => 'required',
         ]);
 
-        $measurements = Measurement::where('id', $id)->update($data);
+        $measurements = Measurement::whereKey($id)->update($validated);
         if ($measurements) {
             $message = "You have successfully updated";
             return redirect()->route('measurements.index', [])
