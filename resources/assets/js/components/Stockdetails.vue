@@ -78,8 +78,8 @@
         },
         methods: {
             addRow(event) {
-              event.preventDefault();
-              this.inputs.push({
+                event.preventDefault();
+                this.inputs.push({
                     brand_id: '',
                     size_id: '',
                     qty: '',
@@ -87,37 +87,43 @@
                 });
             },
 
-            countTotal(){
-                let add=0;
-               this.inputs.forEach(function (value, key) {
+            countTotal() {
+                let add = 0;
+                this.inputs.forEach(function (value, key) {
                     if (!isNaN(parseFloat(value.qty)) && isFinite(value.qty)) {
                         add += parseInt(value.qty);
                     }
-               });
-               this.stock=add;
+                });
+                this.stock = add;
             },
 
-            checkIsDuplicateBrandAndSize(index,flag) {
-                let result = this.inputs.filter((element,k) => {
-                    if(k !=index && element.brand_id !='') {
+            checkIsDuplicateBrandAndSize(index, flag) {
+                let result = this.inputs.filter((element, k) => {
+                    if (k != index && element.brand_id != '') {
                         return element;
                     }
                 });
-                let found = result.find((element)=> {
-                    return  (element.brand_id == this.inputs[index].brand_id);
+                let found = result.find((element) => {
+                    return (element.brand_id == this.inputs[index].brand_id);
                 });
                 if (found) {
                     if (flag == 'brand') {
                         this.inputs[index].brand_id = '';
-                    } 
+                    }
                     alert("This Employee Reporting Sequence Already Created... !, Please select another Employee.");
                 }
             },
 
-            deleteRow(index,event) {
+            deleteRow(index, event) {
                 event.preventDefault();
-                this.inputs.splice(index,1);
+                this.inputs.splice(index, 1);
                 this.countTotal();
+            },
+
+            getProductParticulars(event) {
+                console.log('Product Particulars:', event.target.value);
+                // Your logic here for handling the change event
+                // For example, you can filter products based on the selected weekend date
             }
         }
 }
