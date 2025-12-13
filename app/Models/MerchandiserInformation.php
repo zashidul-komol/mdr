@@ -8,7 +8,7 @@ class MerchandiserInformation extends Model
 {
     public $timestamps = false;
     protected $guarded = array('id');
-
+    protected $table = 'merchandiser_informations';
     public function employee() {
         return $this->belongsTo(Employee::class, 'employee_id');
     }
