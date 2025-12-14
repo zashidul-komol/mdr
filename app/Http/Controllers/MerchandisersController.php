@@ -451,12 +451,9 @@ class MerchandisersController extends Controller
                                     $RequisitionLogs  = MdrAttendanceLog::insert($requisition_log);
                                         
                                     //$ReqRaiseMail    = $ReportTo_Mail['email'];
-                                    //$admin_email     = ['mamun@polarbd.com','samir.paul@polarbd.com'];
                                     $admin_email     = $ReportTo_Mail;
-                                    //$customer_email    = $ReportTo_Mail['email'];
-                                    //dd($customer_email);
 
-                                    //Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
+                                    Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
                                     
                                     $message = "You have successfully Inserted";
                                     return redirect()->route('merchandiserattendances.createMerchandiser', [])
@@ -683,7 +680,7 @@ class MerchandisersController extends Controller
                 //$admin_email     = ['zashidul@polarbd.com'];
                 $admin_email     = $ReportTo_Mail;
                 
-                //Mail::to($admin_email)->send(new ReqRaisedMail($usersInfo));
+                Mail::to($admin_email)->send(new ReqRaisedMail($usersInfo));
                 
                 
                 $message = "You have successfully created the Application....";
@@ -802,7 +799,7 @@ class MerchandisersController extends Controller
                 $AttenReportTo_Mail    = User::where('id', $reporting_sequence->report_to)
                     ->value('email');
                 $admin_email     = $AttenOwner_Mail;
-                //Mail::to($admin_email)->send(new ReturnMail($users));
+                Mail::to($admin_email)->send(new ReturnMail($users));
                 $message = "You have successfully Return the Requisition..";
                     return redirect()->route('requisitions.index')
                         ->with('flash_success', $message);
@@ -827,7 +824,7 @@ class MerchandisersController extends Controller
                 $AttenOwner_Mail   = User::where('id', $reporting_sequence->user_id)
                     ->value('email');
                 $admin_email     = $AttenOwner_Mail;
-                //Mail::to($admin_email)->send(new ReturnMail($users));
+                Mail::to($admin_email)->send(new ReturnMail($users));
 
                 $message = "You have successfully Return the Requisition..";
                     return redirect()->route('requisitions.index')
@@ -869,7 +866,7 @@ class MerchandisersController extends Controller
                         $ReportTo_Mail   = User::where('id', $attendance_reportTo->report_to)
                         ->value('email');
                         $admin_email     = $ReportTo_Mail;
-                        //Mail::to($admin_email)->send(new ForwardMail($users));
+                        Mail::to($admin_email)->send(new ForwardMail($users));
 
                         $message = "You have successfully Forward the Attendance..";
                             return redirect()->route('requisitions.index')
@@ -901,7 +898,7 @@ class MerchandisersController extends Controller
                             ->value('email');
                         $admin_email     = $AttenOwner_Mail;
 
-                        //Mail::to($admin_email)->send(new ApproveMailAttendance($users));
+                        Mail::to($admin_email)->send(new ApproveMailAttendance($users));
 
                         $message = "You have successfully Approved the Attendance..";
                             return redirect()->route('requisitions.index')
@@ -1039,7 +1036,7 @@ class MerchandisersController extends Controller
                     $ReportTo_Mail   = User::where('id', $requisition_reportTo->report_to)
                     ->value('email');
                     $admin_email     = $ReportTo_Mail;
-                    //Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
+                    Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
 
                     $message = "You have successfully Forward the TA/DA Bill..";
                         return redirect()->route('mdrattendances.attendanceList')
@@ -1070,7 +1067,7 @@ class MerchandisersController extends Controller
                         $ReportTo_Mail   = User::where('id', $requisition_reportTo->report_to)
                         ->value('email');
                         $admin_email     = $ReportTo_Mail;
-                        //Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
+                        Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
 
                         $message = "You have successfully Forward the TA/DA Bill..";
                             return redirect()->route('mdrattendances.attendanceList')
@@ -1096,7 +1093,7 @@ class MerchandisersController extends Controller
                         $ReportTo_Mail   = User::where('id', $requisition_reportTo->report_to)
                         ->value('email');
                         $admin_email     = $ReportTo_Mail;
-                        //Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
+                        Mail::to($admin_email)->send(new DepotTADABillMail($usersInfo));
 
                         $message = "You have successfully Forward the TA/DA Bill..";
                             return redirect()->route('merchandiserattendances.attendanceList')
@@ -1132,7 +1129,7 @@ class MerchandisersController extends Controller
                         ->value('email');
                     $admin_email     = $ReqOwner_Mail;
 
-                    //Mail::to($admin_email)->send(new TaDaBillApproveMail($usersInfo));
+                    Mail::to($admin_email)->send(new TaDaBillApproveMail($usersInfo));
 
                     $message = "You have successfully Verified/Audited the Attendance..";
                         return redirect()->route('merchandiserattendances.attendanceList')
