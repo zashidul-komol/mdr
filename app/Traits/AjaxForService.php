@@ -26,7 +26,7 @@ use App\Models\Employee;
 use App\Models\Vehicle;
 use App\Models\Machine;
 use App\Models\User;
-use App\Distributor;
+use App\Models\Distributor;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
