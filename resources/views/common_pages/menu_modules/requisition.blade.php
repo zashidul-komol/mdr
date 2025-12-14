@@ -8,10 +8,10 @@
                  <ul class="nav child-nav level-2">
 
                     @if(isMenuRender('ReportingsequencesController@create',$menu_list))
-                        <li @if($current_location=='ReportingsequencesController@create') class="active-item" @endif><a href="{{ route('reportingsequences.create',[]) }}">Add Reporting</a></li>
+                      <li @if($current_location=='ReportingsequencesController@create') class="active-item" @endif><a href="{{ route('reportingsequences.create',[]) }}">Add Reporting</a></li>
                     @endif
                     @if(isMenuRender('ReportingsequencesController@index',$menu_list))
-                        <li @if($current_location=='ReportingsequencesController@index') class="active-item" @endif><a href="{{ route('reportingsequences.index',[]) }}">Reporting Lists</a></li>
+                      <li @if($current_location=='ReportingsequencesController@index') class="active-item" @endif><a href="{{ route('reportingsequences.index',[]) }}">Reporting Lists</a></li>
                     @endif
                 </ul>
             </li>

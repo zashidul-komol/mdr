@@ -13,7 +13,7 @@ return [
 	    'configaration' => ['SiteSettingsController', 'LocationsController', 'ZonesController', 'DesignationsController' , 'DepartmentsController', 'OfficeLocationsController', 'RegionsController','StagingsController', 'SectionsController', 'VehiclesController', 'MachinesController', 'EmployeesController', 'CategoriesController', 'SubcategoriesController', 'ProductsController', 'MeasurementsController'],
 		'user' => ['RolesController', 'RegisterController', 'DistributorsController'],
 		'merchandiser' => ['MerchandisersController'],
-	    'requisition' => ['RequisitionsController', 'DesignationsController', 'ReportingsequenceController'],
+	    'requisition' => ['RequisitionsController', 'ReportingsequenceController','TadaReportingsequencesController', 'MDRAttendancesController'],
 		'report' => ['InventoryReportsController', 'ServiceReportsController'],
 		
 	],
