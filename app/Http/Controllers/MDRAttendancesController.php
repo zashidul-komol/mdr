@@ -927,7 +927,7 @@ class MDRAttendancesController extends Controller
 
                             
             $pdf = \domPDF::loadView('pdf.MDR_TADABillTopSheet', compact('AttendanceReport', 'Month_Name', 'AttendanceLogs'));
-            return $pdf->setPaper('a4', 'landscape')->download('TA/DA Bill'.'-'.$Month_Name.'.pdf');
+            return $pdf->setPaper('a4', 'landscape')->download('TA-DA Bill'.'-'.$Month_Name.'.pdf');
 
         }elseif($data['Attendance'] == '4'){
             //dd('4');
