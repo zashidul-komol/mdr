@@ -1838,7 +1838,7 @@ class MDRAttendancesController extends Controller
 
                         
         $pdf = \domPDF::loadView('pdf.MDR_TADABill', compact('AttendanceReport', 'Month_Name', 'AttendanceLogs', 'Depot_Name'));
-        return $pdf->setPaper('a4', 'landscape')->download('TA/DA Bill'.'-'.$Month_Name.'.pdf');
+        return $pdf->setPaper('a4', 'landscape')->download('TA-DA Bill'.'-'.$Month_Name.'.pdf');
 
          
     }
