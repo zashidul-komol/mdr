@@ -1182,44 +1182,46 @@ class MerchandisersController extends Controller
      */
     public function attendanceViewCheck($id)
     {
+        // Single record (for header + form)
+        $MdrInformation = MdrAttendance::with([
+            'merchandiser_informations',
+            'depots',
+            'months'
+        ])
+        ->where('attendance_id', $id)
+        ->first();
 
-        //dd($id);
-            $MdrInformations = MdrAttendance::with([
-                'merchandiser_informations'=>function($q){
-                    return $q->select('*');
-                },
-                'depots'=>function($q){
-                    return $q->select('*');
-                },
-                'months'=>function($q){
-                    return $q->select('*');
-                },
-                                
-            ])
-            ->where('attendance_id',$id)
-            ->get(); 
+        if (!$MdrInformation) {
+            abort(404, 'Attendance record not found');
+        }
 
-            //dd($MdrInformations->toArray());
-            $MonthName = $MdrInformations[0]->months->name;
-            $TodayDate = $MdrInformations[0]->salary_date;
-            $year = $MdrInformations[0]->year;
-            //dd($year);
+        // Collection (for table rows)
+        $MdrInformations = MdrAttendance::with([
+            'merchandiser_informations'
+        ])
+        ->where('attendance_id', $id)
+        ->get();
 
-            $AttendanceLogs = MdrAttendanceLog::with([
-                'user'=>function($q){
-                    return $q->select('*');
-                },
-                
-            ])
+        $MonthName = optional($MdrInformation->months)->name;
+        $TodayDate = $MdrInformation->salary_date;
+        $year = $MdrInformation->year;
+
+        $AttendanceLogs = MdrAttendanceLog::with('user')
             ->where('attendance_id', $id)
             ->orderBy('id', 'ASC')
             ->get();
 
-            //dd($AttendanceLogs);
-
-
-        return view('merchandiserattendances.attendanceViewCheck', compact('MdrInformations', 'RegionName', 'TodayDate', 'MonthName', 'year', 'AttendanceLogs'));
+        return view('merchandiserattendances.attendanceViewCheck', compact(
+            'MdrInformation',
+            'MdrInformations',
+            'TodayDate',
+            'MonthName',
+            'year',
+            'AttendanceLogs'
+        ));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
