@@ -1,21 +1,32 @@
-<form id="updateReqEntry" style="position: relative;overflow: hidden;" 
-    action="{{ route('merchandiserattendances.updateAttendance') }}" method="post">
-    <input type="hidden" name="attendance_id" value="{{$MdrInformations[0]->attendance_id}}">
-    <input type="hidden" name="attendance_status" id="attendance_status" value="">
-  {{ csrf_field() }} 
-
-
 @extends('layouts.admin')
 
-
 @section('content')
-<div class="content-header">
-    <div class="text-center">
-        <ul class="breadcrumbs">
-            <li><i class="fa fa-home" aria-hidden="true"></i><a href="#"><h4 class="section-subtitle"><b>Merchandiser Monthly Attendance View</b></h4></a></li>
-        </ul>
+
+<form id="updateReqEntry"
+      action="{{ route('merchandiserattendances.updateAttendance') }}"
+      method="POST"
+      style="position: relative; overflow: hidden;">
+
+    @csrf
+
+    <input type="hidden" name="attendance_id"
+       value="{{ $MdrInformations->first()->attendance_id }}">
+
+    <input type="hidden" name="attendance_status" id="attendance_status">
+
+    <div class="content-header">
+        <div class="text-center">
+            <ul class="breadcrumbs">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <h4 class="section-subtitle">
+                        <b>Merchandiser Monthly Attendance View</b>
+                    </h4>
+                </li>
+            </ul>
+        </div>
     </div>
-</div>
+
     <div class="panel">
             <div class="panel-content">
                        
@@ -76,34 +87,39 @@
                       </tr>
                     </thead>
                     <tbody>
-                        @php ($i=1)
+                        @php($i = 1)
                         @foreach ($MdrInformations as $data)
-                      <tr>
-                        <td>{{$i}}</td>
-                        <td>{{$data->merchandiser_informations->applicant_name  ??  ''}}</td>
-                        <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('month_days[]',$data->month_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('authorized_leave[]',$data->authorized_leave,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('unauthorized_leave[]',$data->unauthorized_leave,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('weekly_holiday[]',$data->weekly_holiday,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('govt_holiday[]',$data->govt_holiday,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('meeting_days[]',$data->meeting_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('others_ta_bill[]',$data->others_ta_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('eid_duty[]',$data->eid_duty,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('working_days[]',$data->working_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('payable_days[]',$data->payable_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('salary[]',$data->salary,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('weekly_holiday_bill[]',$data->weekly_holiday_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('govt_holiday_bill[]',$data->govt_holiday_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('eid_duty_bill[]',$data->eid_duty_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('travelling_allowance[]',$data->travelling_allowance,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('dearness_allowance[]',$data->dearness_allowance,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('mobile_bill[]',$data->mobile_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td>{{Form::text('gross_salary[]',$data->gross_salary,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                      </tr>
-                        @php ($i=$i+1)
+                        <tr>
+                            <td>{{ $i++ }}</td>
+
+                            <td>{{ $data->merchandiser_informations->applicant_name ?? '' }}</td>
+
+                            <td hidden>
+                                {{ Form::text('id[]', $data->id, ['class'=>'form-control','readonly']) }}
+                            </td>
+
+                            <td>{{ Form::text('month_days[]', $data->month_days, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('authorized_leave[]', $data->authorized_leave, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('unauthorized_leave[]', $data->unauthorized_leave, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('weekly_holiday[]', $data->weekly_holiday, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('govt_holiday[]', $data->govt_holiday, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('meeting_days[]', $data->meeting_days, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('others_ta_bill[]', $data->others_ta_bill, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('eid_duty[]', $data->eid_duty, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('working_days[]', $data->working_days, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('payable_days[]', $data->payable_days, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('salary[]', $data->salary, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('weekly_holiday_bill[]', $data->weekly_holiday_bill, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('govt_holiday_bill[]', $data->govt_holiday_bill, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('eid_duty_bill[]', $data->eid_duty_bill, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('travelling_allowance[]', $data->travelling_allowance, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('dearness_allowance[]', $data->dearness_allowance, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('mobile_bill[]', $data->mobile_bill, ['class'=>'form-control','readonly']) }}</td>
+                            <td>{{ Form::text('gross_salary[]', $data->gross_salary, ['class'=>'form-control','readonly']) }}</td>
+                        </tr>
                         @endforeach
-                    </tbody>
+                        </tbody>
+
                   </table>
                 </div>
                 <div align="left" class="table-responsive">
@@ -111,22 +127,25 @@
                   {{Form::textarea('comments',null,array('class' => 'form-control max-length','rows'=>2,'maxlength'=>'250'))}}
                 </div>
         
-                <div align="left" class="table-responsive">
-                    <div class="col-md-8 col-md-offset-2">
-                        <button type="submit" class="btn btn-primary" id="return" onclick="$('#attendance_status').val('return')">RETURN</button>
-                        <button type="submit" class="btn btn-success" id="verify" onclick="$('#attendance_status').val('verify')">FORWARD / VERIFY</button>
-                    </div>
-                </div>
-                {{ Form::close() }}
-                
+                <button type="submit" class="btn btn-primary"
+                        onclick="$('#attendance_status').val('return')">
+                    RETURN
+                </button>
+
+                <button type="submit" class="btn btn-success"
+                        onclick="$('#attendance_status').val('verify')">
+                    FORWARD / VERIFY
+                </button>
+
+            
             </div>
             
         
             
     </div>
 
- </form>   
-@endsection
+</form>
+
 
 @component('common_pages.selectize')
 @include('common_pages.max_length')
@@ -172,47 +191,12 @@
             });
     </script>
 
- <script>
-  function getAmount(id){
-    let working_day_id = 'working_days'+id
-    var working_days = parseInt($('#'+working_day_id).val());
-    //alert(working_days);
-    //alert('komol');
-    $('#travelling_allowance'+id).val(parseFloat(working_days*75).toFixed(2));
-    $('#dearness_allowance'+id).val(parseFloat(working_days*75).toFixed(2));
-    $('#mobile_bill'+id).val(parseFloat(working_days*(500/26)).toFixed(2));
-    $('#salary'+id).val(parseFloat(working_days*(10000/26)).toFixed(2));
-    $('#gross_salary'+id).val(parseFloat((((10000/26)+(500/26)+75+75))*working_days).toFixed(2));
  
-    var value2 = $('#value2').val();
-    var percent2 = $('#rate2').val();
-    $('#amount2').val(value2*percent2/100);
- 
-     //get the sum of each column of each row
-  var sum_value = 0;
-  $('.value').each(function(){
-    sum_value += +$(this).val();
-    $('#total_value').val(sum_value);
-  })
- 
-  var sum_rate = 0;
-  $('.rate').each(function(){
-    sum_rate += +$(this).val();
-    $('#total_rate').val(sum_rate);
-  })
- 
-  var sum_amount = 0;
-  $('.amount').each(function(){
-    sum_amount += +$(this).val();
-    $('#total_amount').val(sum_amount);
-  })
- 
-  
-  }
-</script>
     @slot('css')
      <!--Date picker-->
      <link rel="stylesheet" href="{{ asset('vendor/bootstrap_date-picker/css/bootstrap-datepicker3.min.css') }}">
     @endslot
 @endcomponent
+
+@endsection
 

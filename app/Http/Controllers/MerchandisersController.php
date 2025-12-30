@@ -1143,37 +1143,41 @@ class MerchandisersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function attendanceview($id)
-    {
-            // /dd($id);
+        public function attendanceview($id)
+        {
             $MdrInformations = MdrAttendance::with([
-                'merchandiser_informations'=>function($q){
-                    return $q->select('*');
-                },
-                'depots'=>function($q){
-                    return $q->select('*');
-                },
-                'regions'=>function($q){
-                    return $q->select('*');
-                },
-                'months'=>function($q){
-                    return $q->select('*');
-                },
-                                
+                'merchandiser_informations',
+                'depots',
+                'months',
             ])
-            ->where('attendance_id',$id)
-            ->get(); 
+            ->where('attendance_id', $id)
+            ->get();
 
-            //dd($MdrInformations->toArray());
-            $DepotName = $MdrInformations[0]->depots->name;
-            $MonthName = $MdrInformations[0]->months->name;
-            $TodayDate = $MdrInformations[0]->salary_date;
-            $year = $MdrInformations[0]->year;
-            //dd($year);
+            if ($MdrInformations->isEmpty()) {
+                abort(404, 'Attendance not found');
+            }
+
+            $firstRow  = $MdrInformations->first();
+
+            $DepotName = $firstRow->depots->name;
+            $MonthName = $firstRow->months->name;
+            $TodayDate = $firstRow->salary_date;
+            $year      = $firstRow->year;
+
+            return view(
+                'merchandiserattendances.attendanceview',
+                compact(
+                    'MdrInformations',
+                    'DepotName',
+                    'TodayDate',
+                    'MonthName',
+                    'year'
+                )
+            );
+        }
 
 
-        return view('merchandiserattendances.attendanceview', compact('MdrInformations', 'RegionName', 'DepotName', 'TodayDate', 'MonthName', 'year'));
-    }
+
 
     /**
      * Show the form for creating a new resource.

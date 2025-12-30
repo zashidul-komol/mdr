@@ -16,7 +16,7 @@
                         'method' => 'PUT',
                         'enctype' => 'multipart/form-data',
                         'class' => 'form-horizontal'
-                    ]) }}
+                ]) }}
             
                 <div class="table-responsive">
                         <div class="form-group">
