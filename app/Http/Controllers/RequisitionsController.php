@@ -238,7 +238,7 @@ class RequisitionsController extends Controller {
 
 			$data['certificate'] = $certificate;
 		}
-        dd($dada);
+		
 		if(ReportingSequence::where('user_id', $authUser)->exists()){
 			$requisition_Request_data = $request->except('_method', '_token');
 	        $user_data	= Auth::user();
