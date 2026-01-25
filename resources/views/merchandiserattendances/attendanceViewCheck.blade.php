@@ -11,9 +11,13 @@
     <div class="panel">
             <div class="panel-content">
                        
-                {{ Form::model($MdrInformations,array('route' => array('merchandiserattendances.update',$MdrInformations[0]->attendance_id),'method' => 'PUT','enctype'=>'multipart/form-data','class'=>'form-horizontal')) }}
-
-                
+                {{ Form::model($MdrInformation, [
+                        'route' => ['merchandiserattendances.update', $MdrInformation->attendance_id],
+                        'method' => 'PUT',
+                        'enctype' => 'multipart/form-data',
+                        'class' => 'form-horizontal'
+                ]) }}
+            
                 <div class="table-responsive">
                         <div class="form-group">
 
