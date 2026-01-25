@@ -17,6 +17,16 @@
         </span>
         <div class="panel">
             <div class="panel-content">
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul style="margin:0; padding-left:18px;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
+                </div>
+                @endif
+
                
                 {{ Form::model(request()->old(),array('route' => array('requisitions.store',$users[0]['id']),'enctype'=>'multipart/form-data','class'=>'form-horizontal')) }}
 

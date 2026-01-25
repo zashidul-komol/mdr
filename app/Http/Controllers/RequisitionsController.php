@@ -47,6 +47,7 @@ use Intervention\Image\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Exports\ActiveMDRExport;
 use App\Exports\AprovedMDRExport;
+use Illuminate\Support\Facades\Storage;
 
 //use App\Http\Controllers\RequisitionsController;
 
@@ -181,6 +182,9 @@ class RequisitionsController extends Controller {
 			'physicalStrenth' => 'required',
 			'pdfMerchendising' => 'required',
 			'applicant_mobile' => 'required|min:12|max:12|string|unique:mdr_informations',
+			'applicant_image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048', // only validate if sent
+			'applicant_cv'    => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+			'certificate'     => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:4096',
         ]);
 
 		$authUser  = auth()->user()->id ;
@@ -202,36 +206,39 @@ class RequisitionsController extends Controller {
 		
 		//dd($usersInfo->toArray());
 		//dd($data);
-		if($request->file('applicant_image')){
-            $file_cert = $request->file('applicant_image');
-            $extension_cert =$file_cert->getClientOriginalExtension();
-            $fileName = time().'.'.$extension_cert;
-            $file_cert->move('storage/applicantImages/', $fileName);
-            $data['applicant_image'] = $fileName;
-        }else{
-        	$fileName = '';
-        }
-        
-        if($request->file('applicant_cv')){
-            $file = $request->file('applicant_cv');
-            $extension =$file->getClientOriginalExtension();
-            $applicantCV = time().'.'.$extension;
-            $file->move('storage/applicantCV/', $applicantCV);
-            $data['applicant_cv'] = $applicantCV;
-        }else{
-        	$applicantCV = '';
-        }
+		$fileName = null;
+		$applicantCV = null;
+		$certificate = null;
+		if ($request->hasFile('applicant_image')) {
+			Storage::disk('public')->makeDirectory('applicantImages');
+			$file = $request->file('applicant_image');
 
-        if($request->file('certificate')){
-            $file_cert = $request->file('certificate');
-            $extension_cert =$file_cert->getClientOriginalExtension();
-            $certificate = time().'.'.$extension_cert;
-            $file_cert->move('storage/Certificate/', $certificate);
-            $data['certificate'] = $certificate;
-        }else{
-        	$certificate = '';	
-        }
-        //dd($file);
+			$fileName = time().'_img.'.$file->getClientOriginalExtension();
+			$file->storeAs('applicantImages', $fileName, 'public');
+
+			$data['applicant_image'] = $fileName; // or 'applicantImages/'.$fileName
+		}
+
+		if ($request->hasFile('applicant_cv')) {
+			Storage::disk('public')->makeDirectory('applicantCV');
+			$file = $request->file('applicant_cv');
+
+			$applicantCV = time().'_cv.'.$file->getClientOriginalExtension();
+			$file->storeAs('applicantCV', $applicantCV, 'public');
+
+			$data['applicant_cv'] = $applicantCV;
+		}
+
+		if ($request->hasFile('certificate')) {
+			Storage::disk('public')->makeDirectory('Certificate');
+			$file = $request->file('certificate');
+
+			$certificate = time().'_cert.'.$file->getClientOriginalExtension();
+			$file->storeAs('Certificate', $certificate, 'public');
+
+			$data['certificate'] = $certificate;
+		}
+        dd($dada);
 		if(ReportingSequence::where('user_id', $authUser)->exists()){
 			$requisition_Request_data = $request->except('_method', '_token');
 	        $user_data	= Auth::user();
