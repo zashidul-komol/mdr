@@ -17,7 +17,8 @@ use App\Traits\AjaxForRequisition;
 use App\Traits\AjaxForReturn;
 use App\Traits\AjaxForService;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 use DB;
 
 class AjaxController extends Controller {
@@ -250,37 +251,33 @@ class AjaxController extends Controller {
 			->make(true);
 	}
 
-	public function uploadProfilePicture(Request $request) {
+	public function uploadProfilePicture(Request $request)
+	{
 		$request->validate([
-			'avatar' => 'mimes:jpeg,jpg,png|max:1024',
+			'avatar' => 'required|image|mimes:jpeg,jpg,png|max:1024',
 		]);
 
-		$user = \App\Models\User::find(auth()->id());
-		$old_image = $user->avatar;
-		$upload = $request->file('avatar');
-		$directory = '../public' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'avatar' . DIRECTORY_SEPARATOR;
-		$fileName = time() . '_avatar.' . $upload->getClientOriginalExtension();
-		$imageUrl = $directory . $fileName;
-		$imgUploaded = Image::make($upload);
-		if ($imgUploaded) {
-			$imgUploaded->resize(150, 150)->save($imageUrl);
-			$userObj = $user->update(['avatar' => $fileName]);
-			if ($userObj) {
-				if ($old_image) {
-					\Storage::delete('/images/avatar/' . $old_image);
-				}
-				$message = "You have successfully uploaded";
-				return redirect()->route('users.show')->with('flash_success', $message);
-			} else {
-				$message = "Something wrong!! Please try again";
-				return redirect()->route('users.show')->with('flash_danger', $message);
-			}
+		$user = \App\Models\User::findOrFail(auth()->id());
 
-		} else {
-			$message = "Image can't be processed!! Please upload another";
-			return redirect()->route('users.show')->with('flash_danger', $message);
+		Storage::disk('public')->makeDirectory('images/avatar');
+
+		$upload = $request->file('avatar');
+		$fileName = time() . '_avatar.' . $upload->getClientOriginalExtension();
+
+		$absolutePath = storage_path('app/public/images/avatar/' . $fileName);
+
+		Image::read($upload)
+			->cover(150, 150)
+			->save($absolutePath);
+
+		if (!empty($user->avatar)) {
+			Storage::disk('public')->delete('images/avatar/' . $user->avatar);
 		}
 
+		$user->update(['avatar' => $fileName]);
+
+		return redirect()->route('users.show')
+			->with('flash_success', 'You have successfully uploaded');
 	}
 
 	//promotional sms list

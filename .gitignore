@@ -17,3 +17,6 @@ package-lock.json
 /public/js/app.js
 /public/css/app.css
 .settings
+/storage/*
+!/storage/app/public/
+!/storage/app/public/.gitignore
