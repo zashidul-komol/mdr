@@ -34,7 +34,7 @@ class DepotTADABillMail extends Mailable
     {
         //$subject ='Application No : '.$this->data['maxrequisition_no'];
         $subject ='Depot TA/DA Bill ';
-        return $this->markdown('emails.DepotTaDaBillMail')
+        return $this->markdown('emails.DepotTADABillMail')
         ->subject($subject)
         ->with([
             'usersInfo'=> $this->usersInfo
