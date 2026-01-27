@@ -51,6 +51,8 @@ use App\Mail\ForwardMail;
 use App\Mail\ApproveMail;
 use App\Mail\HoldMail;
 use App\Mail\CancelMail;
+use App\Mail\DepotTADABillMail;
+use App\Mail\TaDaBillApproveMail;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Intervention\Image\Facades\DB;
