@@ -823,7 +823,7 @@ class MDRAttendancesController extends Controller
 
             $AttendanceReport = DB::select(sum('salary'))
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
                 ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
@@ -866,7 +866,7 @@ class MDRAttendancesController extends Controller
                     },
                 ])
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
                 ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
@@ -907,7 +907,7 @@ class MDRAttendancesController extends Controller
                     },
                 ])
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
                 ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
@@ -950,7 +950,7 @@ class MDRAttendancesController extends Controller
                     },
                 ])
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
                 ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
@@ -988,7 +988,7 @@ class MDRAttendancesController extends Controller
                 ])
                 ->where('depot_id', $Depot_ID)
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->orderBy('depot_id', 'desc')
                 ->get(); 
                 //dd($AttendanceReport->toArray());
@@ -1053,7 +1053,7 @@ class MDRAttendancesController extends Controller
                     },
                 ])
                 ->where('mdr_attendances.month_id', $Month_ID)
-                ->where('mdr_attendances.year', '2025')
+                ->where('mdr_attendances.year', '2026')
                 ->where('mdr_attendances.status', $Status)
                 ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
                 ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
@@ -1091,7 +1091,7 @@ class MDRAttendancesController extends Controller
                     },
                 ])
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
                 ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
@@ -1780,7 +1780,7 @@ class MDRAttendancesController extends Controller
         
         $Month_ID = $Qry['month_id'];
         $Depot_ID = $Qry['depot_id'];
-        $Year = 2025;
+        $Year = 2026;
         //dd($Month_ID);
         $AttendanceReport = MdrAttendance::with([
                 'distributors'=>function($q){
@@ -1797,7 +1797,7 @@ class MDRAttendancesController extends Controller
                 },
             ])
             ->where('month_id', $Month_ID)
-            ->where('year', '2025')
+            ->where('year', '2026')
             ->where('attendance_id', $id)
             ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
             ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')

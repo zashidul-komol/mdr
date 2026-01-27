@@ -70,7 +70,7 @@ class MerchandiserSalarySheetExport implements FromQuery, WithMapping, WithHeadi
 
                     )
                 ->where('month_id', $this->data['Month_ID'])
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('merchandiser_informations', 'merchandiser_informations.id', '=', 'mdr_attendances.merchan_id')
                 ->join('employees', 'employees.id', '=', 'merchandiser_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')

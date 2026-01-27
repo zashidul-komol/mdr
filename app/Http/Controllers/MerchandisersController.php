@@ -1374,7 +1374,7 @@ class MerchandisersController extends Controller
         
         $Month_ID = $Qry['month_id'];
         $Depot_ID = $Qry['depot_id'];
-        $Year = 2025;
+        $Year = 2026;
         //dd($Month_ID);
         $AttendanceReport = MdrAttendance::with([
                 'merchandiser_informations'=>function($q){
@@ -1388,7 +1388,7 @@ class MerchandisersController extends Controller
                 },
             ])
             ->where('month_id', $Month_ID)
-            ->where('year', '2025')
+            ->where('year', '2026')
             ->where('attendance_id', $id)
             ->join('merchandiser_informations', 'merchandiser_informations.id', '=', 'mdr_attendances.merchan_id')
             ->join('employees', 'employees.id', '=', 'merchandiser_informations.employee_id')
@@ -1472,7 +1472,7 @@ class MerchandisersController extends Controller
                     },
                 ])
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('merchandiser_informations', 'merchandiser_informations.id', '=', 'mdr_attendances.merchan_id')
                 ->join('employees', 'employees.id', '=', 'merchandiser_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
@@ -1509,7 +1509,7 @@ class MerchandisersController extends Controller
                     },
                 ])
                 ->where('month_id', $Month_ID)
-                ->where('year', '2025')
+                ->where('year', '2026')
                 ->join('merchandiser_informations', 'merchandiser_informations.id', '=', 'mdr_attendances.merchan_id')
                 ->join('employees', 'employees.id', '=', 'merchandiser_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
