@@ -457,46 +457,40 @@ class MDRAttendancesController extends Controller
                                 ->where('status', 'approved')
                                 ->value('id');
                     //dd($Attendance_check);
-                    if (empty($Attendance_check)) {
+                    if(empty($Attendance_check)){
+                        //dd('Komol');
+                        $requisition_data['user_id']    = $user_data->id;
+                        $requisition_data['report_to']  = $reporting_sequence;
+                        $requisition_data['sequence']   = 1;
+                        $requisition_data['attendance_status'] = 'pending';
+                        $requisition_data['date']   = Carbon::now();
+                        $requisition_data['employee_id']  = $Employee_ID;
+                        $requisition_data['month_id'] = $Month_id;
+                        $requisition_data['year'] = $Year;
+                        $requisition_data['depot_id']  = $Depot_id;
+                        $requisition_data['region_id'] = $Region_id;
+                        $requisition_data['status'] = 'pending';
 
-                        $requisition_data = [
-                            'user_id' => $user_data->id,
-                            'report_to' => $reporting_sequence,
-                            'sequence' => 1,
-                            'attendance_status' => 'pending',
-                            'date' => Carbon::now(),
-                            'employee_id' => $Employee_ID,
-                            'month_id' => $Month_id,
-                            'year' => $Year,
-                            'depot_id' => $Depot_id,
-                            'region_id' => $Region_id,
-                            'status' => 'pending',
-                        ];
+                        if($Attendance){
 
-                        if ($Attendance) {
-
-                            Attendance::where('employee_id', $Employee_ID)
+                            $requisitionData = Attendance::where('employee_id', $Employee_ID)
                                 ->where('month_id', $Month_id)
                                 ->where('depot_id', $Depot_id)
                                 ->where('region_id', $Region_id)
                                 ->where('year', $Year)
                                 ->update([
-                                    'report_to' => $reporting_sequence,
+                                    'report_to' => $reporting_sequence ,
                                     'attendance_status' => 'pending',
                                     'status' => 'pending',
-                                    'sequence' => 1,
                                     'updated_at' => Carbon::now(),
                                 ]);
-
                             $Attendance_ID = $Attendance;
 
-                        } else {
+                        }else{
 
-                            $requisitionData = Attendance::create($requisition_data);
-                            $Attendance_ID = $requisitionData->id;
+                           $requisitionData = Attendance::create($requisition_data);
+                           $Attendance_ID = $requisitionData->id;
                         }
-                    }
-
                         
 
                         //insert data in requisitionDetails table
