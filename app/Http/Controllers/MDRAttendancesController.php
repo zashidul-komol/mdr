@@ -38,6 +38,7 @@ use App\Mail\ApproveMailAttendance;
 use App\Mail\HoldMail;
 use App\Mail\CancelMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class MDRAttendancesController extends Controller
 {
@@ -158,153 +159,163 @@ class MDRAttendancesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
-{
-    try {
+    {
+        DB::beginTransaction();
 
-        $request->validate([
-            'DepotName'   => 'required',
-            'salary_date' => 'required',
-            'month_name'  => 'required',
-            'year'        => 'required',
-        ]);
+        try {
 
-        $userId = auth()->id();
-        $monthId = Month::where('name', $request->month_name)->value('id');
-        $year = $request->year;
-
-        $user = User::findOrFail($userId);
-        $employee = Employee::findOrFail($user->employee_id);
-
-        $Depot_id  = $employee->depot_id;
-        $Region_id = $employee->region_id;
-
-        if (!TadaReportingSequence::where('user_id', $userId)->exists()) {
-            return back()->with('flash_danger','Reporting sequence not created');
-        }
-
-        $reporting_sequence = TadaReportingSequenceDetail::where('user_id',$userId)
-            ->where('sequence',1)
-            ->value('report_to');
-
-        $Attendance = Attendance::where([
-            'employee_id'=>$employee->id,
-            'month_id'=>$monthId,
-            'depot_id'=>$Depot_id,
-            'region_id'=>$Region_id,
-            'year'=>$year
-        ])->first();
-
-        if($Attendance && $Attendance->attendance_status=='checked' && $Attendance->status=='approved'){
-            return back()->with('flash_danger','Already checked & approved');
-        }
-
-        if(!$Attendance){
-            $Attendance = Attendance::create([
-                'user_id'=>$userId,
-                'employee_id'=>$employee->id,
-                'month_id'=>$monthId,
-                'year'=>$year,
-                'depot_id'=>$Depot_id,
-                'region_id'=>$Region_id,
-                'report_to'=>$reporting_sequence,
-                'attendance_status'=>'pending',
-                'status'=>'pending',
-                'date'=>now(),
+            $request->validate([
+                'salary_date' => 'required|date',
+                'month_name'  => 'required',
+                'year'        => 'required',
+                'id'          => 'required|array',
             ]);
-        } else {
-            $Attendance->update([
-                'report_to'=>$reporting_sequence,
-                'attendance_status'=>'pending',
-                'status'=>'pending',
-            ]);
-        }
 
-        $Attendance_ID = $Attendance->id;
+            $userId = auth()->id();
 
-        if(!isset($request->id)){
-            return back()->with('flash_danger','No MDR rows found');
-        }
-
-        $insert = [];
-
-        foreach($request->id as $i=>$mdrId){
-
-            if(empty($request->working_days[$i] ?? null)) continue;
-
-            $mdr = MdrInformation::find($mdrId);
-            if(!$mdr) continue;
-
-            $row = [
-                'attendance_id'=>$Attendance_ID,
-                'mdr_id'=>$mdrId,
-                'employee_id'=>$mdr->employee_id,
-                'user_id'=>$userId,
-                'depot_id'=>$mdr->depot_id,
-                'region_id'=>$mdr->region_id,
-                'distributor_id'=>$mdr->distributor_id,
-
-                'month_days'=>$request->month_days[$i] ?? 0,
-                'authorized_leave'=>$request->authorized_leave[$i] ?? 0,
-                'unauthorized_leave'=>$request->unauthorized_leave[$i] ?? 0,
-                'weekly_holiday'=>$request->weekly_holiday[$i] ?? 0,
-                'govt_holiday'=>$request->govt_holiday[$i] ?? 0,
-                'meeting_days'=>$request->meeting_days[$i] ?? 0,
-                'others_ta_bill'=>$request->others_ta_bill[$i] ?? 0,
-                'eid_duty'=>$request->eid_duty[$i] ?? 0,
-                'working_days'=>$request->working_days[$i] ?? 0,
-                'payable_days'=>$request->payable_days[$i] ?? 0,
-                'travelling_allowance'=>$request->travelling_allowance[$i] ?? 0,
-                'dearness_allowance'=>$request->dearness_allowance[$i] ?? 0,
-                'mobile_bill'=>$request->mobile_bill[$i] ?? 0,
-                'salary'=>$request->salary[$i] ?? 0,
-                'weekly_holiday_bill'=>$request->weekly_holiday_bill[$i] ?? 0,
-                'govt_holiday_bill'=>$request->govt_holiday_bill[$i] ?? 0,
-                'eid_duty_bill'=>$request->eid_duty_bill[$i] ?? 0,
-                'gross_salary'=>$request->gross_salary[$i] ?? 0,
-
-                'salary_date'=>$request->salary_date,
-                'year'=>$year,
-                'month_id'=>$monthId,
-                'status'=>'active',
-                'created_at'=>now(),
-                'updated_at'=>now(),
-            ];
-
-            $exists = MdrAttendance::where('mdr_id',$mdrId)
-                ->where('month_id',$monthId)
-                ->where('year',$year)
-                ->exists();
-
-            if($exists){
-                MdrAttendance::where('mdr_id',$mdrId)
-                    ->where('month_id',$monthId)
-                    ->where('year',$year)
-                    ->update($row);
-            }else{
-                $insert[] = $row;
+            $monthId = Month::where('name', $request->month_name)->value('id');
+            if (!$monthId) {
+                return back()->with('flash_danger', 'Invalid month selected');
             }
+
+            $year = $request->year;
+
+            $user = User::findOrFail($userId);
+            $employee = Employee::findOrFail($user->employee_id);
+
+            $Depot_id  = $employee->depot_id;
+            $Region_id = $employee->region_id;
+
+            if (!TadaReportingSequence::where('user_id', $userId)->exists()) {
+                return back()->with('flash_danger', 'Reporting sequence not created');
+            }
+
+            $reporting_sequence = TadaReportingSequenceDetail::where('user_id', $userId)
+                ->where('sequence', 1)
+                ->value('report_to');
+
+            $Attendance = Attendance::where([
+                'user_id'     => $userId,
+                'employee_id'=> $employee->id,
+                'month_id'   => $monthId,
+                'depot_id'   => $Depot_id,
+                'region_id'  => $Region_id,
+                'year'       => $year
+            ])->first();
+
+            if ($Attendance && $Attendance->attendance_status == 'checked' && $Attendance->status == 'approved') {
+                return back()->with('flash_danger', 'Already checked & approved');
+            }
+
+            if (!$Attendance) {
+                $Attendance = Attendance::create([
+                    'user_id'           => $userId,
+                    'employee_id'       => $employee->id,
+                    'month_id'          => $monthId,
+                    'year'              => $year,
+                    'depot_id'          => $Depot_id,
+                    'region_id'         => $Region_id,
+                    'report_to'         => $reporting_sequence,
+                    'attendance_status'=> 'pending',
+                    'status'            => 'pending',
+                    'date'              => today(),
+                ]);
+            } else {
+                $Attendance->update([
+                    'report_to'         => $reporting_sequence,
+                    'attendance_status'=> 'pending',
+                    'status'            => 'pending',
+                ]);
+            }
+
+            $Attendance_ID = $Attendance->id;
+            $insert = [];
+
+            foreach ($request->id as $i => $mdrId) {
+
+                if (empty($request->working_days[$i] ?? null)) continue;
+
+                $mdr = MdrInformation::find($mdrId);
+                if (!$mdr) continue;
+
+                $data = [
+                    'month_days'            => $request->month_days[$i] ?? 0,
+                    'authorized_leave'     => $request->authorized_leave[$i] ?? 0,
+                    'unauthorized_leave'   => $request->unauthorized_leave[$i] ?? 0,
+                    'weekly_holiday'       => $request->weekly_holiday[$i] ?? 0,
+                    'govt_holiday'         => $request->govt_holiday[$i] ?? 0,
+                    'meeting_days'         => $request->meeting_days[$i] ?? 0,
+                    'others_ta_bill'       => $request->others_ta_bill[$i] ?? 0,
+                    'eid_duty'             => $request->eid_duty[$i] ?? 0,
+                    'working_days'         => $request->working_days[$i] ?? 0,
+                    'payable_days'         => $request->payable_days[$i] ?? 0,
+                    'travelling_allowance' => $request->travelling_allowance[$i] ?? 0,
+                    'dearness_allowance'   => $request->dearness_allowance[$i] ?? 0,
+                    'mobile_bill'          => $request->mobile_bill[$i] ?? 0,
+                    'salary'               => $request->salary[$i] ?? 0,
+                    'weekly_holiday_bill'  => $request->weekly_holiday_bill[$i] ?? 0,
+                    'govt_holiday_bill'    => $request->govt_holiday_bill[$i] ?? 0,
+                    'eid_duty_bill'        => $request->eid_duty_bill[$i] ?? 0,
+                    'gross_salary'         => $request->gross_salary[$i] ?? 0,
+                    'salary_date'          => $request->salary_date,
+                    'updated_at'           => now(),
+                ];
+
+                $exists = MdrAttendance::where('mdr_id', $mdrId)
+                    ->where('month_id', $monthId)
+                    ->where('year', $year)
+                    ->exists();
+
+                if ($exists) {
+
+                    MdrAttendance::where('mdr_id', $mdrId)
+                        ->where('month_id', $monthId)
+                        ->where('year', $year)
+                        ->update($data);
+
+                } else {
+
+                    $insert[] = array_merge($data, [
+                        'attendance_id' => $Attendance_ID,
+                        'mdr_id'        => $mdrId,
+                        'employee_id'   => $mdr->employee_id,
+                        'user_id'       => $userId,
+                        'depot_id'      => $mdr->depot_id,
+                        'region_id'     => $mdr->region_id,
+                        'distributor_id'=> $mdr->distributor_id,
+                        'year'          => $year,
+                        'month_id'      => $monthId,
+                        'status'        => 'active',
+                        'created_at'    => now(),
+                    ]);
+                }
+            }
+
+            if ($insert) {
+                MdrAttendance::insert($insert);
+            }
+
+            MdrAttendanceLog::create([
+                'attendance_id' => $Attendance_ID,
+                'user_id'       => $userId,
+                'action_name'   => 'Prepared By',
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('mdrattendances.create')
+                ->with('flash_success', 'Inserted Successfully');
+
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+            return back()->with('flash_danger', $e->getMessage());
         }
-
-        if(!empty($insert)){
-            MdrAttendance::insert($insert);
-        }
-
-        MdrAttendanceLog::create([
-            'attendance_id'=>$Attendance_ID,
-            'user_id'=>$userId,
-            'action_name'=>'Prepared By',
-        ]);
-
-        return redirect()->route('mdrattendances.create')
-            ->with('flash_success','Inserted Successfully');
-
-    } catch (\Throwable $e){
-
-        return back()->with('flash_danger',$e->getMessage());
-
     }
-}
+
 
 
 
