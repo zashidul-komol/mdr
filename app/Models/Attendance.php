@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attendance extends Model {
 	//public $timestamps = false;
-	protected $guarded = array('id');
+	//protected $guarded = array('id');
+	protected $guarded = [];
 
 	public function user() {
 		return $this->belongsTo(User::class);
