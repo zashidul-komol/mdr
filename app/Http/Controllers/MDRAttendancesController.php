@@ -26,7 +26,6 @@ use App\Exports\BrandWiseDfExport;
 use App\Exports\MdrTADABillExport;
 use App\Exports\MDRSalaryTopSheetExport;
 use Intervention\Image\Facades\Image;
-use Intervention\Image\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\ReturnMail;
 use App\Mail\ReqRaisedMail;

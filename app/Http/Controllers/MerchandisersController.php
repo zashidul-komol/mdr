@@ -55,12 +55,12 @@ use App\Mail\DepotTADABillMail;
 use App\Mail\TaDaBillApproveMail;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
-use Intervention\Image\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Exports\ActiveMDRExport;
 use App\Exports\AprovedMDRExport;
 use App\Exports\MerchandiserSalarySheetExport;
 use App\Exports\MerchandiserTADABillExport;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
