@@ -1,152 +1,220 @@
+<form id="updateReqEntry" style="position: relative;overflow: hidden;" 
+    action="{{ route('mdrattendances.updateAttendance') }}" method="post">
+    <input type="hidden" name="attendance_id" value="{{$MdrInformations[0]->attendance_id}}">
+    <input type="hidden" name="attendance_status" id="attendance_status" value="">
+  {{ csrf_field() }} 
+
+
 @extends('layouts.admin')
 
+
 @section('content')
-
-<form id="updateReqEntry"
-      action="{{ route('mdrattendances.updateAttendance') }}"
-      method="POST"
-      style="position:relative;overflow:hidden;">
-
-@csrf
-
-<input type="hidden" name="attendance_id" value="{{ $MdrInformations[0]->attendance_id }}">
-<input type="hidden" name="attendance_status" id="attendance_status">
-
 <div class="content-header">
     <div class="text-center">
         <ul class="breadcrumbs">
-            <li>
-                <i class="fa fa-home"></i>
-                <h4 class="section-subtitle"><b>MDR Monthly Attendance View</b></h4>
-            </li>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="#"><h4 class="section-subtitle"><b>MDR Monthly Attendance View</b></h4></a></li>
         </ul>
     </div>
 </div>
+    <div class="panel">
+            <div class="panel-content">
+                       
+                <div class="table-responsive">
+                        <div class="form-group">
 
-<div class="panel">
-<div class="panel-content">
+                          <label for="inputName" class="col-sm-1 ">Depot</label>
 
-<div class="form-group row">
+                          <div class="col-sm-2">
+                            {{Form::text('depot_name',$DepotName,array('class' => 'form-control', 'readonly' => 'true'))}}
+                              {!! $errors->first('depot_id', '<p class="text-danger">:message</p>' ) !!}
+                          </div>
+                          <label for="inputName" class="col-sm-1 ">Date</label>
 
-<div class="col-sm-2">
-<label>Depot</label>
-<input class="form-control" value="{{ $DepotName }}" readonly>
-</div>
+                          <div class="col-sm-2">
+                             {{Form::text('salary_date',$TodayDate, array('class' => 'form-control', 'readonly' => 'true'))}}
+                              {!! $errors->first('salary_date', '<p class="text-danger">:message</p>' ) !!}
+                          </div>
+                          <label for="inputName" class="col-sm-1 ">Month</label>
 
-<div class="col-sm-2">
-<label>Date</label>
-<input class="form-control" value="{{ $TodayDate }}" readonly>
-</div>
+                          <div class="col-sm-2">
+                             {{Form::text('month_name',$MonthName,array('class' => 'form-control' , 'readonly' => 'true'))}}
+                              {!! $errors->first('month_id', '<p class="text-danger">:message</p>' ) !!}
+                          </div>
+                          <label for="inputName" class="col-sm-1 ">Year</label>
 
-<div class="col-sm-2">
-<label>Month</label>
-<input class="form-control" value="{{ $MonthName }}" readonly>
-</div>
+                          <div class="col-sm-2">
+                             {{Form::text('year',$year,array('class' => 'form-control' , 'readonly' => 'true'))}}
+                              {!! $errors->first('year', '<p class="text-danger">:message</p>' ) !!}
+                          </div>
+                      </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="datatable" class="data-table table table-striped nowrap table-hover" cellspacing="0" width="100%">
+                        <thead>
+                      <tr>
+                        <th width="2%" align="left">SL</th>
+                        <th width="7%" align="left">DB Name</th>
+                        <th width="7%" align="left">MDR Name</th>
+                        <th hidden="true">ID</th>
+                        <th width="5%" align="left">Month Days</th>
+                        <th width="3%" align="left">Leave</th>
+                        <th width="3%" align="left">Absent</th>
+                        <th width="3%" align="left">Weekly Holiday</th>
+                        <th width="3%" align="left">Govt Holiday</th>
+                        <th width="4%" align="left">Meeting Days</th>
+                        <th width="4%" align="left">Others TA</th>
+                        <th width="4%" align="left">EID Duty</th>
+                        <th width="5%" align="left">Working Days</th>
+                        <th width="5%" align="left">Payable Days</th>
+                        <th width="7%" align="left">Salary</th>
+                        <th width="6%" align="left">W.Holiday Bill</th>
+                        <th width="6%" align="left">G.Holiday Bill</th>
+                        <th width="6%" align="left">EID Duty Bill</th>
+                        <th width="5%" align="left">TA</th>
+                        <th width="5%" align="letf">DA</th>
+                        <th width="5%" align="left">Mobile</th>
+                        <th width="10%" align="right">G.Salary</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        @php ($i=1)
+                        @foreach ($MdrInformations as $data)
+                      <tr>
+                        <td>{{$i}}</td>
+                        <td>{{$data->distributors->distributorName  ??  ''}}</td>
+                        <td>{{$data->mdrInformations->applicant_name  ??  ''}}</td>
+                        <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('month_days[]',$data->month_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('authorized_leave[]',$data->authorized_leave,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('unauthorized_leave[]',$data->unauthorized_leave,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('weekly_holiday[]',$data->weekly_holiday,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('govt_holiday[]',$data->govt_holiday,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('meeting_days[]',$data->meeting_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('others_ta_bill[]',$data->others_ta_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('eid_duty[]',$data->eid_duty,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('working_days[]',$data->working_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('payable_days[]',$data->payable_days,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('salary[]',$data->salary,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('weekly_holiday_bill[]',$data->weekly_holiday_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('govt_holiday_bill[]',$data->govt_holiday_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('eid_duty_bill[]',$data->eid_duty_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('travelling_allowance[]',$data->travelling_allowance,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('dearness_allowance[]',$data->dearness_allowance,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('mobile_bill[]',$data->mobile_bill,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                        <td>{{Form::text('gross_salary[]',$data->gross_salary,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
+                      </tr>
+                        @php ($i=$i+1)
+                        @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <div align="left" class="table-responsive">
+                  {{Form::label('  &nbsp; &nbsp; Comments',null,array('class' => 'control-label'))}}
+                  {{Form::textarea('comments',null,array('class' => 'form-control max-length','rows'=>2,'maxlength'=>'250'))}}
+                </div>
+        
+                <div align="left" class="table-responsive">
+                    <div class="col-md-8 col-md-offset-2">
+                        <button type="submit" class="btn btn-primary" id="return" onclick="$('#attendance_status').val('return')">RETURN</button>
+                        <button type="submit" class="btn btn-success" id="verify" onclick="$('#attendance_status').val('verify')">FORWARD / VERIFY</button>
+                    </div>
+                </div>
+                {{ Form::close() }}
+                
+            </div>
+            
+        
+            
+    </div>
 
-<div class="col-sm-2">
-<label>Year</label>
-<input class="form-control" value="{{ $year }}" readonly>
-</div>
-
-</div>
-
-<div class="table-responsive">
-
-<table class="table table-striped table-hover">
-
-<thead>
-<tr>
-<th>SL</th>
-<th>DB Name</th>
-<th>MDR Name</th>
-<th>Month Days</th>
-<th>Leave</th>
-<th>Absent</th>
-<th>Weekly Holiday</th>
-<th>Govt Holiday</th>
-<th>Meeting</th>
-<th>Others TA</th>
-<th>EID</th>
-<th>Working</th>
-<th>Payable</th>
-<th>Salary</th>
-<th>WH Bill</th>
-<th>GH Bill</th>
-<th>EID Bill</th>
-<th>TA</th>
-<th>DA</th>
-<th>Mobile</th>
-<th>Gross</th>
-</tr>
-</thead>
-
-<tbody>
-
-@foreach($MdrInformations as $i => $data)
-
-<input type="hidden" name="id[]" value="{{ $data->id }}">
-
-<tr>
-<td>{{ $i+1 }}</td>
-<td>{{ $data->distributors->distributorName ?? '' }}</td>
-<td>{{ $data->mdrInformations->applicant_name ?? '' }}</td>
-
-<td><input readonly name="month_days[]" class="form-control" value="{{ $data->month_days }}"></td>
-<td><input readonly name="authorized_leave[]" class="form-control" value="{{ $data->authorized_leave }}"></td>
-<td><input readonly name="unauthorized_leave[]" class="form-control" value="{{ $data->unauthorized_leave }}"></td>
-<td><input readonly name="weekly_holiday[]" class="form-control" value="{{ $data->weekly_holiday }}"></td>
-<td><input readonly name="govt_holiday[]" class="form-control" value="{{ $data->govt_holiday }}"></td>
-<td><input readonly name="meeting_days[]" class="form-control" value="{{ $data->meeting_days }}"></td>
-<td><input readonly name="others_ta_bill[]" class="form-control" value="{{ $data->others_ta_bill }}"></td>
-<td><input readonly name="eid_duty[]" class="form-control" value="{{ $data->eid_duty }}"></td>
-<td><input readonly name="working_days[]" class="form-control" value="{{ $data->working_days }}"></td>
-<td><input readonly name="payable_days[]" class="form-control" value="{{ $data->payable_days }}"></td>
-<td><input readonly name="salary[]" class="form-control" value="{{ $data->salary }}"></td>
-<td><input readonly name="weekly_holiday_bill[]" class="form-control" value="{{ $data->weekly_holiday_bill }}"></td>
-<td><input readonly name="govt_holiday_bill[]" class="form-control" value="{{ $data->govt_holiday_bill }}"></td>
-<td><input readonly name="eid_duty_bill[]" class="form-control" value="{{ $data->eid_duty_bill }}"></td>
-<td><input readonly name="travelling_allowance[]" class="form-control" value="{{ $data->travelling_allowance }}"></td>
-<td><input readonly name="dearness_allowance[]" class="form-control" value="{{ $data->dearness_allowance }}"></td>
-<td><input readonly name="mobile_bill[]" class="form-control" value="{{ $data->mobile_bill }}"></td>
-<td><input readonly name="gross_salary[]" class="form-control" value="{{ $data->gross_salary }}"></td>
-
-</tr>
-
-@endforeach
-
-</tbody>
-</table>
-
-</div>
-
-<div class="form-group">
-<label>Comments</label>
-<textarea name="comments" class="form-control" rows="2" maxlength="250"></textarea>
-</div>
-
-<div class="text-center">
-
-<button type="submit"
-        class="btn btn-primary"
-        name="action"
-        value="return"
-        onclick="$('#attendance_status').val('return')">
-RETURN
-</button>
-
-<button type="submit"
-        class="btn btn-success"
-        name="action"
-        value="verify"
-        onclick="$('#attendance_status').val('verify')">
-FORWARD / VERIFY
-</button>
-
-</div>
-
-</div>
-</div>
-
-</form>
-
+ </form>   
 @endsection
+
+@component('common_pages.selectize')
+@include('common_pages.max_length')
+<script src="{{ asset('vendor/bootstrap_date-picker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script type="text/javascript">
+
+        $('.datepicker').datepicker({ format: "yyyy-mm-dd",todayHighlight: true,autoclose:true});
+
+        //get shops  ??  distributor
+        function getExecutiveDepotShop(depotId){
+          $('#shop-list').html('');
+          $.ajax({
+              type: 'Get',
+              url:"{{ route('ajax.getShops') }}",
+              data:{depot_id:depotId,distributor:1}
+            }) .done(function(response) {
+             $('#shop-list').html(response);
+           //Select2 basic example
+             $.fn.select2.defaults.set( "theme", "bootstrap" );
+              $(".select2").select2({
+                 // placeholder: function(){
+                 //     $(this).data('placeholder');
+                 // },
+                 allowClear: true
+             });
+            if('{{old('shop_id')}}'){
+              $("#shop_id").val('{{old('shop_id')}}').change();
+            }
+
+          })
+          .fail(function(response) {
+          });
+        }
+
+            $('#submit').prop("disabled", true);
+            $('input:checkbox').click(function() {
+             if ($(this).is(':checked')) {
+             $('#submit').prop("disabled", false);
+             } else {
+             if ($('.checks').filter(':checked').length < 1){
+             $('#submit').attr('disabled',true);}
+             }
+            });
+    </script>
+
+ <script>
+  function getAmount(id){
+    let working_day_id = 'working_days'+id
+    var working_days = parseInt($('#'+working_day_id).val());
+    //alert(working_days);
+    //alert('komol');
+    $('#travelling_allowance'+id).val(parseFloat(working_days*75).toFixed(2));
+    $('#dearness_allowance'+id).val(parseFloat(working_days*75).toFixed(2));
+    $('#mobile_bill'+id).val(parseFloat(working_days*(500/26)).toFixed(2));
+    $('#salary'+id).val(parseFloat(working_days*(10000/26)).toFixed(2));
+    $('#gross_salary'+id).val(parseFloat((((10000/26)+(500/26)+75+75))*working_days).toFixed(2));
+ 
+    var value2 = $('#value2').val();
+    var percent2 = $('#rate2').val();
+    $('#amount2').val(value2*percent2/100);
+ 
+     //get the sum of each column of each row
+  var sum_value = 0;
+  $('.value').each(function(){
+    sum_value += +$(this).val();
+    $('#total_value').val(sum_value);
+  })
+ 
+  var sum_rate = 0;
+  $('.rate').each(function(){
+    sum_rate += +$(this).val();
+    $('#total_rate').val(sum_rate);
+  })
+ 
+  var sum_amount = 0;
+  $('.amount').each(function(){
+    sum_amount += +$(this).val();
+    $('#total_amount').val(sum_amount);
+  })
+ 
+  
+  }
+</script>
+    @slot('css')
+     <!--Date picker-->
+     <link rel="stylesheet" href="{{ asset('vendor/bootstrap_date-picker/css/bootstrap-datepicker3.min.css') }}">
+    @endslot
+@endcomponent
+
