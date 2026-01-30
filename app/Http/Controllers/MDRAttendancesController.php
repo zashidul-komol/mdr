@@ -961,7 +961,7 @@ class MDRAttendancesController extends Controller
                 
 
                 $AttendanceTopSheet = $AttendanceTopSheet->get();
-                dd($AttendanceTopSheet->toArray());
+                //dd($AttendanceTopSheet->toArray());
 
                 $Month_Name_Qry = Month::select('name')->where('id', $Month_ID)->limit(1)
                     ->first();
@@ -971,7 +971,7 @@ class MDRAttendancesController extends Controller
                 
                         
         }elseif($data['Attendance'] == '4'){
-            dd('4');
+            //dd('4');
             $Month_ID = $data['month_id'];
             $Year = $data['year'];
 
