@@ -699,7 +699,7 @@ class MDRAttendancesController extends Controller
     {
         $data = $request->all();
         //dd($data);
-        $Depot_IDs = $data['depot_id'];
+        
         //dd($data['year']);
         $request->validate([
             'depot_id' => 'required',
@@ -707,6 +707,7 @@ class MDRAttendancesController extends Controller
             'month_id' => 'required',
             'year' => 'required',
         ]);
+        $Depot_IDs = $data['depot_id'];
 
         if($data['Attendance']== '1'){
             //dd('1');
@@ -918,101 +919,44 @@ class MDRAttendancesController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function downloadAttendanceTopSheet(Request $request) 
+    public function downloadAttendanceTopSheet(Request $request)
     {
         $data = $request->all();
-        //dd($data);
-        //dd($data['status']);
+
         $request->validate([
             'salary_date' => 'required',
             'month_id' => 'required',
             'year' => 'required',
             'status' => 'required',
         ]);
-        //dd('komol');
 
-        if($data['Attendance']== '2'){
-            //dd('2');
-            $Month_ID   = $data['month_id'];
-            $Year       = $data['year'];
-            $Status     = $data['status'];
+        if ($data['Attendance'] == '2') {
 
-            $AttendanceTopSheet = MdrAttendance::with([
-                    'distributors'=>function($q){
-                        return $q->select('*');
-                    },
-                    'mdrInformations'=>function($q){
-                        return $q->select('*');
-                    },
-                    'employee'=>function($q){
-                        return $q->select('*');
-                    },
-                    'depots'=>function($q){
-                        return $q->select('*');
-                    },
-                ])
-                ->where('mdr_attendances.month_id', $Month_ID)
-                ->where('mdr_attendances.year', '2026')
-                ->where('mdr_attendances.status', $Status)
-                ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
-                ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
-                ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id');
-                //->groupBy('mdr_attendances.employee_id');
-                
-
-                $AttendanceTopSheet = $AttendanceTopSheet->get();
-                //dd($AttendanceTopSheet->toArray());
-
-                $Month_Name_Qry = Month::select('name')->where('id', $Month_ID)->limit(1)
-                    ->first();
-                $Month_Name = $Month_Name_Qry['name'];
-               
-            return (new MDRSalaryTopSheetExport(compact('Month_ID', 'Depot_ID', 'Year', 'AttendanceTopSheet', 'Status')))->download('Monthly Attendance top-sheet.xlsx');
-                
-                        
-        }elseif($data['Attendance'] == '4'){
-            //dd('4');
             $Month_ID = $data['month_id'];
-            $Year = $data['year'];
+            $Year     = $data['year'];
+            $Status   = $data['status'];
 
-            $AttendanceTopSheet = MdrAttendance::with([
-                    'distributors'=>function($q){
-                        return $q->select('*');
-                    },
-                    'mdrInformations'=>function($q){
-                        return $q->select('*');
-                    },
-                    'employee'=>function($q){
-                        return $q->select('*');
-                    },
-                    'depots'=>function($q){
-                        return $q->select('*');
-                    },
-                ])
-                ->where('month_id', $Month_ID)
-                ->where('year', '2026')
-                ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
-                ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
-                ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
-                ->orderBy('depots.name', 'asc');
+            return (new MDRSalaryTopSheetExport(
+                $Month_ID,
+                $Year,
+                $Status
+            ))->download('Monthly_Attendance_Top_Sheet.xlsx');
 
-                if($Depot_IDs){
-                    //dd($Depot_IDs);
-                    $AttendanceTopSheet = $AttendanceTopSheet->whereIn('mdr_attendances.depot_id', $Depot_IDs);
-                }
-                $AttendanceTopSheet = $AttendanceTopSheet->get();
-                //dd($AttendanceReport->toArray());
+        } elseif ($data['Attendance'] == '4') {
 
-                $Month_Name_Qry = Month::select('name')->where('id', $Month_ID)->limit(1)
-                    ->first();
-                $Month_Name = $Month_Name_Qry['name'];
-                
-            return (new MDRSalaryTopSheetExport(compact('Month_ID', 'Depot_ID', 'Year', 'AttendanceTopSheet')))->download('Monthly Attendance top-sheet.xlsx');    
-            
+            $Month_ID = $data['month_id'];
+            $Year     = $data['year'];
+
+            // Attendance 4 = ALL status
+            return (new MDRSalaryTopSheetExport(
+                $Month_ID,
+                $Year,
+                null
+            ))->download('Monthly_Attendance_Top_Sheet.xlsx');
         }
-        
-                 
     }
+
+
     /**
      * Show the form for editing the specified resource.
      *
