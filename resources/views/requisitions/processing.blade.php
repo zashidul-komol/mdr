@@ -57,7 +57,7 @@
                         <td>{{$data->id}}</td>
                         <td>{{$data->mdrInformation[0]->mdr_idcard  ??  ''}}</td>
                         <td>{{$data->region->name  ??  ''}}</td>
-                        <td>{{$data->depots->name  ??  ''}}</td>
+                        <td>{{$data->depot->name  ??  ''}}</td>
                         <td>{{$data->distributor->distributorName  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_name  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_education  ??  ''}}</td>
