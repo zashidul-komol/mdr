@@ -17,67 +17,77 @@ use App\Models\MdrAttendance;
 class MDRSalaryTopSheetExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize, WithEvents {
     use Exportable;
 
-    protected $Month_ID;
-    protected $Year;
-    protected $Status;
-    protected $Depot_ID;
+    protected $data;
 
-    public function __construct($Month_ID, $Year, $Status, $Depot_ID = null)
-    {
-        $this->Month_ID = $Month_ID;
-        $this->Year     = $Year;
-        $this->Status   = $Status;
-        $this->Depot_ID = $Depot_ID;
+    public function __construct($data) {
+        $this->data = $data;
     }
+        //dd($this->data['Month_ID']);
+    //dd('Komol');
 
+    public function query() {
+        //dd($this->data['Depot_ID']);
+        //$Depot_IDs = $this->data['Depot_ID'];
+        //dd($Depot_IDs);
+        //dd($Status);
+        $query = MdrAttendance::with([
+                    'distributors'=>function($q){
+                        return $q->select('*');
+                    },
+                    'mdrInformations'=>function($q){
+                        return $q->select('*');
+                    },
+                    'employee'=>function($q){
+                        return $q->select('*');
+                    },
+                    'depots'=>function($q){
+                        return $q->select('*');
+                    },
+                ])
+                ->select(   'mdr_informations.mdr_idcard as MDRID',
+                            'mdr_informations.application_id',
+                            'mdr_informations.applicant_name',
+                            'mdr_informations.applicant_mobile',
+                            'mdr_informations.effectivedate',
+                            'mdr_informations.inactiveDate',
+                            'depots.name as DepotName',
+                            'distributors.distributorName as DBName',
+                            'distributors.dbcode as DBCode',
+                            'mdr_attendances.month_days',
+                            'mdr_attendances.authorized_leave',
+                            'mdr_attendances.unauthorized_leave',
+                            'mdr_attendances.weekly_holiday',
+                            'mdr_attendances.govt_holiday',
+                            'mdr_attendances.eid_duty',
+                            'mdr_attendances.working_days',
+                            'mdr_attendances.payable_days',
+                            'mdr_attendances.salary',
+                            'mdr_attendances.travelling_allowance',
+                            'mdr_attendances.dearness_allowance',
+                            'mdr_attendances.mobile_bill',
+                            'mdr_attendances.weekly_holiday_bill',
+                            'mdr_attendances.govt_holiday_bill',
+                            'mdr_attendances.others_ta_bill',
+                            'mdr_attendances.eid_duty_bill',
+                            'mdr_attendances.gross_salary'
 
-    public function query()
-    {
-        $query = MdrAttendance::select(
-            'mdr_informations.mdr_idcard as MDRID',
-            'mdr_informations.application_id',
-            'mdr_informations.applicant_name',
-            'mdr_informations.applicant_mobile',
-            'mdr_informations.effectivedate',
-            'mdr_informations.inactiveDate',
-            'depots.name as DepotName',
-            'distributors.distributorName as DBName',
-            'distributors.dbcode as DBCode',
-            'mdr_attendances.status',
-            'mdr_attendances.month_days',
-            'mdr_attendances.authorized_leave',
-            'mdr_attendances.unauthorized_leave',
-            'mdr_attendances.weekly_holiday',
-            'mdr_attendances.govt_holiday',
-            'mdr_attendances.eid_duty',
-            'mdr_attendances.working_days',
-            'mdr_attendances.payable_days',
-            'mdr_attendances.salary',
-            'mdr_attendances.travelling_allowance',
-            'mdr_attendances.dearness_allowance',
-            'mdr_attendances.mobile_bill',
-            'mdr_attendances.weekly_holiday_bill',
-            'mdr_attendances.govt_holiday_bill',
-            'mdr_attendances.others_ta_bill',
-            'mdr_attendances.eid_duty_bill',
-            'mdr_attendances.gross_salary'
-        )
-        ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
-        ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
-        ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
-        ->join('distributors', 'distributors.id', '=', 'mdr_attendances.distributor_id')
-        ->where('mdr_attendances.month_id', $this->Month_ID)
-        ->where('mdr_attendances.year', $this->Year)
-        ->where('mdr_attendances.status', $this->Status)
-        ->orderBy('depots.name', 'asc');
+                    )
+                ->where('month_id', $this->data['Month_ID'])
+                ->where('year', '2026')
+                ->join('mdr_informations', 'mdr_informations.id', '=', 'mdr_attendances.mdr_id')
+                ->join('employees', 'employees.id', '=', 'mdr_informations.employee_id')
+                ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
+                ->join('distributors', 'distributors.id', '=', 'mdr_attendances.distributor_id')
+                ->orderBy('depots.name', 'asc');
 
-        if ($this->Depot_ID) {
-            $query->whereIn('mdr_attendances.depot_id', (array)$this->Depot_ID);
-        }
+               
+                //$query = $query->get();
+                
+            //dd($query);   
+            return $query;
+            
 
-        return $query;
     }
-
 
     public function headings(): array
     {
