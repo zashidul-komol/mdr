@@ -1383,7 +1383,7 @@ class RequisitionsController extends Controller {
 	            'employee'=>function($q){
 	                return $q->select('*');
 	            },
-	            'depots'=>function($q){
+	            'depot'=>function($q){
 	                return $q->select('*');
 	            },
 	        ])

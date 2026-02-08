@@ -60,7 +60,7 @@
                         <td>{{$i}}</td>
                         <td>{{$data->application_id}}</td>
                         <td>{{$data->mdr_idcard}}</td>
-                        <td>{{$data->depots->name  ??  ''}}</td>
+                        <td>{{$data->depot->name  ??  ''}}</td>
                         <td>{{$data->regions->name  ??  ''}}</td>
                         <td>{{$data->distributors->distributorName  ??  ''}}</td>
                         <td>{{$data->applicant_name  ??  ''}}</td>
