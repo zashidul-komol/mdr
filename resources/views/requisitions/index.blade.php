@@ -38,7 +38,9 @@
                       <tr>
                         <th width="5%">SI NO.</th>
                         <th width="10%">Application No.</th>
+                        <th width="10%">MDR ID</th>
                         <th width="25%">Region Name</th>
+                        <th width="25%">Depot Name</th>
                         <th width="25%">Distributor Name</th>
                         <th width="25%">Applicant Name</th>
                         <th width="20%">Applicant Education</th>
@@ -52,7 +54,9 @@
                       <tr>
                         <td>{{$i}}</td>
                         <td>{{$data->id}}</td>
+                        <td>{{$data->mdrInformation[0]->mdr_idcard  ??  ''}}</td>
                         <td>{{$data->region->name  ??  ''}}</td>
+                        <td>{{$data->depot->name  ??  ''}}</td>
                         <td>{{$data->distributor->distributorName  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_name  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_education  ??  ''}}</td>

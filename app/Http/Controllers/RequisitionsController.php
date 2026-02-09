@@ -74,6 +74,9 @@ class RequisitionsController extends Controller {
 	            'region'=>function($q){
 	                return $q->select('*');
 	            },
+	            'depot'=>function($q){
+	                return $q->select('*');
+	            },
 	            
 
 	        ])
