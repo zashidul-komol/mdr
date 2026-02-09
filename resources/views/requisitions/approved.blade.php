@@ -43,6 +43,7 @@
                         <th width="10%">Application No.</th>
                         <th width="15%">Depot Name</th>
                         <th width="15%">Region Name</th>
+                        <th width="15%">DB Code</th>
                         <th width="25%">Distributor Name</th>
                         <th width="25%">Applicant Name</th>
                         <th width="15%">Applicant Education</th>
@@ -58,6 +59,7 @@
                         <td>{{$data->id}}</td>
                         <td>{{$data->depot->name  ??  ''}}</td>
                         <td>{{$data->region->name  ??  ''}}</td>
+                        <td>{{$data->distributor->dbcode  ??  ''}}</td>
                         <td>{{$data->distributor->distributorName  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_name  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_education  ??  ''}}</td>

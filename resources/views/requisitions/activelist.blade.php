@@ -44,6 +44,7 @@
                         <th width="10%">MDR ID No.</th>
                         <th width="15%">Depot Name</th>
                         <th width="15%">Region Name</th>
+                        <th width="15%">DB Code</th>
                         <th width="15%">Distributor Name</th>
                         <th width="15%">Applicant Name</th>
                         <th width="10%">Rocket No</th>
@@ -62,6 +63,7 @@
                         <td>{{$data->mdr_idcard}}</td>
                         <td>{{$data->depots->name  ??  ''}}</td>
                         <td>{{$data->regions->name  ??  ''}}</td>
+                        <td>{{$data->distributors->dbcode  ??  ''}}</td>
                         <td>{{$data->distributors->distributorName  ??  ''}}</td>
                         <td>{{$data->applicant_name  ??  ''}}</td>
                         <td>{{$data->applicant_mobile  ??  ''}}</td>

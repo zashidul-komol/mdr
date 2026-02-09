@@ -1389,6 +1389,9 @@ class RequisitionsController extends Controller {
 	            'depot'=>function($q){
 	                return $q->select('*');
 	            },
+	            'distributor'=>function($q){
+	                return $q->select('*');
+	            },
 	        ])
 	        ->where('application_status', 'processing')
 	        //->where('region_id', $region)

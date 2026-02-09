@@ -45,6 +45,7 @@
                         <th width="10%">Region Name</th>
                         <th width="15%">Distributor Name</th>
                         <th width="15%">Applicant Name</th>
+                        <th width="15%">Rocket No.</th>
                         <th width="5%">Education</th>
                         <th width="8%">Effective Date</th>
                         <th width="5%">Inactive Day</th>
@@ -65,6 +66,7 @@
                         <td>{{$data->regions->name  ??  ''}}</td>
                         <td>{{$data->distributors->distributorName  ??  ''}}</td>
                         <td>{{$data->applicant_name  ??  ''}}</td>
+                        <td>{{$data->applicant_mobile  ??  ''}}</td>
                         <td>{{$data->applicant_education  ??  ''}}</td>
                         <td>{{$data->effectivedate  ??  ''}}</td>
                         <td>{{$data->created_at  ??  ''}}</td>
