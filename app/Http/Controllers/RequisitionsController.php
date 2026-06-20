@@ -43,11 +43,11 @@ use App\Mail\HoldMail;
 use App\Mail\CancelMail;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
-use Intervention\Image\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Exports\ActiveMDRExport;
 use App\Exports\AprovedMDRExport;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 //use App\Http\Controllers\RequisitionsController;
 
@@ -183,6 +183,9 @@ class RequisitionsController extends Controller {
 			'height_inch' => 'required',
 			'dressUp' => 'required',
 			'physicalStrenth' => 'required',
+			'distributor_id' => 'required',
+			'applicant_image' => 'required',
+			'applicant_cv' => 'required',
 			'pdfMerchendising' => 'required',
 			'applicant_mobile' => 'required|min:12|max:12|string|unique:mdr_informations',
 			'applicant_image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048', // only validate if sent
@@ -1074,6 +1077,9 @@ class RequisitionsController extends Controller {
 	                return $q->select('*');
 	            },
 	            'depots'=>function($q){
+	                return $q->select('*');
+	            },
+	            'employee'=>function($q){
 	                return $q->select('*');
 	            },
 	            

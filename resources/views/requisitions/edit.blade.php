@@ -1,5 +1,3 @@
-@component('common_pages.selectize')
-@endcomponent
 @extends('layouts.admin')
 @section('title', 'Update MDR Information')
 @section('content')
@@ -144,6 +142,20 @@
 @endsection
 @component('common_pages.selectize')
     <script src="{{ asset('vendor/bootstrap_date-picker/js/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        var todayDate = new Date();
+        var maxDate = new Date();
+        todayDate.setDate(todayDate.getDate()-10);
+         $('.datepicker3').datepicker({ 
+            format: "yyyy-mm-dd",
+            todayHighlight: true,
+            autoclose:true,
+             startDate : todayDate,
+             endDate : maxDate
+        
+        });
+
+    </script>
     <script>
          $('.datepicker').datepicker({ format: "yyyy-mm-dd",todayHighlight: true,autoclose:true});
 
