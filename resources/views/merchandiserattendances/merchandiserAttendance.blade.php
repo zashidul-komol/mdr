@@ -74,7 +74,7 @@
                         <td>{{$i}}</td>
                         <td>{{$data->applicant_name  ??  ''}}</td>
                         <td hidden="true">{{Form::text('id[]',$data->id,array('class' => 'form-control', 'readonly' => 'true'))}}</td>
-                        <td hidden="true">{{Form::text('basic_salary[]',$data->basic_salary,array('class' => 'form-control', 'readonly' => 'true', 'id'=>'$data->basic_salary'.$i))}}</td>
+                        <td hidden="true">{{Form::text('basic_salary[]',$data->basic_salary,array('class' => 'form-control', 'readonly' => 'true', 'id'=>'basic_salary'.$i))}}</td>
                         <td hidden="true">{{Form::text('effectivedate[]',$data->effectivedate,array('class' => 'form-control', 'readonly' => 'true', 'id'=>'$data->effectivedate'.$i))}}</td>
                         <td hidden="true">{{Form::text('Monthly_Total_Holidays[]',$Monthly_Total_Holidays,array('class' => 'form-control', 'readonly' => 'true', 'id'=>'Monthly_Total_Holidays'.$i))}}</td>
                         <td>{{Form::text('month_days[]',$Month_Days,array('class' => 'form-control' , 'readonly' => 'true', 'id'=>'month_days'.$i))}}
@@ -211,20 +211,20 @@ function getAmount(id, effectivedate, basic_salary){
     let month_days_id = 'month_days'+id
     let others_ta_bill_id = 'others_ta_bill'+id
     let meeting_days_id = 'meeting_days'+id
-    let basic_salary_id = basic_salary
+    let basic_salary_id = 'basic_salary'+id;
 
     //alert(basic_salary_id);
     
-    var working_days = parseInt($('#'+working_day_id).val());
-    var authorized_leave = parseInt($('#'+authorized_leave_id).val());
-    var unauthorized_leave = parseInt($('#'+unauthorized_leave_id).val());
-    var weekly_holiday = parseInt($('#'+weekly_holiday_id).val());
-    var govt_holiday = parseInt($('#'+govt_holiday_id).val());
-    var eid_duty = parseInt($('#'+eid_duty_id).val());
-    var month_days = parseInt($('#'+month_days_id).val());
-    var meeting_days = parseInt($('#'+meeting_days_id).val());
-    var others_ta_bill = parseInt($('#'+others_ta_bill_id).val());
-    var basic_salary = parseFloat($('#'+basic_salary_id).val());
+    var working_days = parseInt($('#'+working_day_id).val()) || 0;
+    var authorized_leave = parseInt($('#'+authorized_leave_id).val()) || 0;
+    var unauthorized_leave = parseInt($('#'+unauthorized_leave_id).val()) || 0;
+    var weekly_holiday = parseInt($('#'+weekly_holiday_id).val()) || 0;
+    var govt_holiday = parseInt($('#'+govt_holiday_id).val()) || 0;
+    var eid_duty = parseInt($('#'+eid_duty_id).val()) || 0;
+    var month_days = parseInt($('#'+month_days_id).val()) || 0;
+    var meeting_days = parseInt($('#'+meeting_days_id).val()) || 0;
+    var others_ta_bill = parseInt($('#'+others_ta_bill_id).val()) || 0;
+    var basic_salary_amount = parseFloat($('#'+basic_salary_id).val()) || 0;
     
     let current_month_days = getEffectiveDate(effectivedate);
     //alert(basic_salary);
@@ -243,11 +243,11 @@ function getAmount(id, effectivedate, basic_salary){
             $('#dearness_allowance'+id).val(parseFloat((working_days-meeting_days)*130));
             $('#mobile_bill'+id).val(parseFloat((500/month_days)*CurPayableDays).toFixed(0));
             $('#payable_days'+id).val(parseFloat((month_days - current_month_days)-unauthorized_leave));
-            $('#salary'+id).val(parseFloat(((month_days - current_month_days)-unauthorized_leave)*(basic_salary_id/month_days)).toFixed(0));
-            $('#weekly_holiday_bill'+id).val(parseFloat((basic_salary_id/30)*weekly_holiday).toFixed(0));
-            $('#govt_holiday_bill'+id).val(parseFloat((basic_salary_id/30)*govt_holiday).toFixed(0));
-            $('#eid_duty_bill'+id).val(parseFloat(((basic_salary_id/30)*2)*eid_duty).toFixed(0));
-            $('#gross_salary'+id).val(parseFloat((((basic_salary_id/month_days)*CurPayableDays) + ((500/month_days)*CurPayableDays) + (200)*working_days + (130)*(working_days-meeting_days) + ((basic_salary_id/30)*(weekly_holiday + govt_holiday)) + others_ta_bill + (((basic_salary_id/30)*2)*eid_duty) )).toFixed(0));
+            $('#salary'+id).val(parseFloat(((month_days - current_month_days)-unauthorized_leave)*(basic_salary_amount/month_days)).toFixed(0));
+            $('#weekly_holiday_bill'+id).val(parseFloat((basic_salary_amount/30)*weekly_holiday).toFixed(0));
+            $('#govt_holiday_bill'+id).val(parseFloat((basic_salary_amount/30)*govt_holiday).toFixed(0));
+            $('#eid_duty_bill'+id).val(parseFloat(((basic_salary_amount/30)*2)*eid_duty).toFixed(0));
+            $('#gross_salary'+id).val(parseFloat((((basic_salary_amount/month_days)*CurPayableDays) + ((500/month_days)*CurPayableDays) + (200)*working_days + (130)*(working_days-meeting_days) + ((basic_salary_amount/30)*(weekly_holiday + govt_holiday)) + others_ta_bill + (((basic_salary_amount/30)*2)*eid_duty) )).toFixed(0));
             
         }else{
             //alert(current_month_days);
@@ -255,11 +255,11 @@ function getAmount(id, effectivedate, basic_salary){
             $('#dearness_allowance'+id).val(parseFloat((working_days-meeting_days)*130));
             $('#mobile_bill'+id).val(parseFloat((500/month_days)*CurPayableDays).toFixed(0));
             $('#payable_days'+id).val(parseFloat((month_days - current_month_days)-unauthorized_leave));
-            $('#salary'+id).val(parseFloat(((month_days - current_month_days)-unauthorized_leave)*(basic_salary_id/month_days)).toFixed(0));
-            $('#weekly_holiday_bill'+id).val(parseFloat((basic_salary_id/30)*weekly_holiday).toFixed(0));
-            $('#govt_holiday_bill'+id).val(parseFloat((basic_salary_id/30)*govt_holiday).toFixed(0));
-            $('#eid_duty_bill'+id).val(parseFloat(((basic_salary_id/30)*2)*eid_duty).toFixed(0));
-            $('#gross_salary'+id).val(parseFloat((((basic_salary_id/month_days)*CurPayableDays) + ((500/month_days)*CurPayableDays) + (200)*working_days + (130)*(working_days-meeting_days) + ((basic_salary_id/30)*(weekly_holiday + govt_holiday)) + others_ta_bill + (((basic_salary_id/30)*2)*eid_duty) ) ).toFixed(0));
+            $('#salary'+id).val(parseFloat(((month_days - current_month_days)-unauthorized_leave)*(basic_salary_amount/month_days)).toFixed(0));
+            $('#weekly_holiday_bill'+id).val(parseFloat((basic_salary_amount/30)*weekly_holiday).toFixed(0));
+            $('#govt_holiday_bill'+id).val(parseFloat((basic_salary_amount/30)*govt_holiday).toFixed(0));
+            $('#eid_duty_bill'+id).val(parseFloat(((basic_salary_amount/30)*2)*eid_duty).toFixed(0));
+            $('#gross_salary'+id).val(parseFloat((((basic_salary_amount/month_days)*CurPayableDays) + ((500/month_days)*CurPayableDays) + (200)*working_days + (130)*(working_days-meeting_days) + ((basic_salary_amount/30)*(weekly_holiday + govt_holiday)) + others_ta_bill + (((basic_salary_amount/30)*2)*eid_duty) ) ).toFixed(0));
         }
  
         
@@ -269,11 +269,11 @@ function getAmount(id, effectivedate, basic_salary){
         $('#dearness_allowance'+id).val(parseFloat((working_days-meeting_days)*130));
         $('#mobile_bill'+id).val(parseFloat((500/month_days)*CurPayableDays).toFixed(0));
         $('#payable_days'+id).val(parseFloat((month_days - current_month_days)-unauthorized_leave));
-        $('#salary'+id).val(parseFloat(((month_days - current_month_days)-unauthorized_leave)*(basic_salary_id/month_days)).toFixed(0));
-        $('#weekly_holiday_bill'+id).val(parseFloat((basic_salary_id/30)*weekly_holiday).toFixed(0));
-        $('#govt_holiday_bill'+id).val(parseFloat((basic_salary_id/30)*govt_holiday).toFixed(0));
-        $('#eid_duty_bill'+id).val(parseFloat(((basic_salary_id/30)*2)*eid_duty).toFixed(0));
-        $('#gross_salary'+id).val(parseFloat((((basic_salary_id/month_days)*CurPayableDays) + ((500/month_days)*CurPayableDays) + (200)*working_days + (130)*(working_days-meeting_days) + ((basic_salary_id/30)*(weekly_holiday + govt_holiday)) + others_ta_bill +(((basic_salary_id/30)*2)*eid_duty) ) ).toFixed(0));
+        $('#salary'+id).val(parseFloat(((month_days - current_month_days)-unauthorized_leave)*(basic_salary_amount/month_days)).toFixed(0));
+        $('#weekly_holiday_bill'+id).val(parseFloat((basic_salary_amount/30)*weekly_holiday).toFixed(0));
+        $('#govt_holiday_bill'+id).val(parseFloat((basic_salary_amount/30)*govt_holiday).toFixed(0));
+        $('#eid_duty_bill'+id).val(parseFloat(((basic_salary_amount/30)*2)*eid_duty).toFixed(0));
+        $('#gross_salary'+id).val(parseFloat((((basic_salary_amount/month_days)*CurPayableDays) + ((500/month_days)*CurPayableDays) + (200)*working_days + (130)*(working_days-meeting_days) + ((basic_salary_amount/30)*(weekly_holiday + govt_holiday)) + others_ta_bill +(((basic_salary_amount/30)*2)*eid_duty) ) ).toFixed(0));
        
     }
 }
@@ -330,13 +330,13 @@ function specificDays(dayName, monthName, year, effectivedate='') {
     let others_ta_bill_id = 'others_ta_bill'+id
 
     
-    var Monthly_Total_Holidays = parseInt($('#'+Monthly_Total_Holidays_id).val());
-    var month_days = parseInt($('#'+month_days_id).val());
-    var authorized_leave = parseInt($('#'+authorized_leave_id).val());
-    var unauthorized_leave = parseInt($('#'+unauthorized_leave_id).val());
-    var weekly_holiday = parseInt($('#'+weekly_holiday_id).val());
-    var govt_holiday = parseInt($('#'+govt_holiday_id).val());
-    var eid_duty = parseInt($('#'+eid_duty_id).val());
+    var Monthly_Total_Holidays = parseInt($('#'+Monthly_Total_Holidays_id).val()) || 0;
+    var month_days = parseInt($('#'+month_days_id).val()) || 0;
+    var authorized_leave = parseInt($('#'+authorized_leave_id).val()) || 0;
+    var unauthorized_leave = parseInt($('#'+unauthorized_leave_id).val()) || 0;
+    var weekly_holiday = parseInt($('#'+weekly_holiday_id).val()) || 0;
+    var govt_holiday = parseInt($('#'+govt_holiday_id).val()) || 0;
+    var eid_duty = parseInt($('#'+eid_duty_id).val()) || 0;
 
 
 

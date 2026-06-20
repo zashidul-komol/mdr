@@ -1109,6 +1109,9 @@ class RequisitionsController extends Controller {
 	            'depots'=>function($q){
 	                return $q->select('*');
 	            },
+	            'employee'=>function($q){
+	                return $q->select('*');
+	            },
 	            
 	        ])
 	        ->where('status', 'active')

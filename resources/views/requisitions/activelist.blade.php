@@ -47,6 +47,7 @@
                         <th width="15%">DB Code</th>
                         <th width="15%">Distributor Name</th>
                         <th width="15%">Applicant Name</th>
+                        <th width="15%">Officer Name</th>
                         <th width="10%">Rocket No</th>
                         <th width="6%">Education</th>
                         <th width="6%">Salary</th>
@@ -66,10 +67,11 @@
                         <td>{{$data->distributors->dbcode  ??  ''}}</td>
                         <td>{{$data->distributors->distributorName  ??  ''}}</td>
                         <td>{{$data->applicant_name  ??  ''}}</td>
+                        <td>{{$data->employee->name  ??  ''}}</td>
                         <td>{{$data->applicant_mobile  ??  ''}}</td>
                         <td>{{$data->applicant_education  ??  ''}}</td>
                         <td>{{$data->basic_salary  ??  ''}}</td>
-                        <td>{{$data->effectivedate  ??  ''}}</td>
+                        <td>{{ !empty($data->effectivedate) ? \Carbon\Carbon::parse($data->effectivedate)->format('Y-m-d') : '' }}</td>
                         <td>
                           {!!  Html::decode(link_to_route('requisitions.edit', '<span aria-hidden="true" class="fa fa-edit fa-x"></span>', array($data->application_id)))!!}
                         </td>

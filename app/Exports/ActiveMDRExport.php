@@ -8,9 +8,19 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Events\AfterSheet;
-use \Maatwebsite\Excel\Sheet;
 
-class ActiveMDRExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize, WithEvents {
+use \Maatwebsite\Excel\Sheet;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+
+class ActiveMDRExport implements 
+FromQuery, 
+WithMapping, 
+WithHeadings, 
+ShouldAutoSize, 
+WithEvents, 
+WithColumnFormatting {
     use Exportable;
 
     protected $param;
@@ -63,6 +73,13 @@ class ActiveMDRExport implements FromQuery, WithMapping, WithHeadings, ShouldAut
 
     }
 
+    public function columnFormats(): array
+    {
+        return [
+            'K' => NumberFormat::FORMAT_DATE_YYYYMMDD2,
+        ];
+    }
+
     public function headings(): array
     {
 
@@ -100,7 +117,9 @@ class ActiveMDRExport implements FromQuery, WithMapping, WithHeadings, ShouldAut
             $employee->applicant_mobile,
             $employee->basic_salary,
             $employee->applicant_education,
-            $employee->effectivedate,
+            $employee->effectivedate
+                ? Date::dateTimeToExcel(new \DateTime($employee->effectivedate))
+                : null,
             $employee->status
              
         ];

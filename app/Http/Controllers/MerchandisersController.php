@@ -369,7 +369,7 @@ class MerchandisersController extends Controller
                                         //dd('komol');
                                         $MDRInformationQry = MerchandiserInformation::where('id', $data['id'][$i])
                                         ->first();
-                                        $MDR_EffectiveDate = MerchandiserInformation::select('joiningdate')->where('id', $data['id'][$i])
+                                        $MDR_EffectiveDate = MerchandiserInformation::select('effectivedate')->where('id', $data['id'][$i])
                                         ->first();
 
                                         //dd($MDR_EffectiveDate);
@@ -655,7 +655,7 @@ class MerchandisersController extends Controller
                 $mdrInformation_data['height_feet'] = $data['height_feet'];
                 $mdrInformation_data['height_inch'] = $data['height_inch'];
                 //$applicationDetail_data['appearance'] = $data['appearance'];
-                //$mdrInformation_data['joiningdate']   = $EffectiveDate;
+                //$mdrInformation_data['effectivedate']   = $EffectiveDate;
                 $mdrInformation_data['applicant_image'] = $fileName;
                 $mdrInformation_data['applicant_cv']    = $applicantCV;
                 $mdrInformation_data['certificate'] = $certificate;
@@ -1479,6 +1479,7 @@ class MerchandisersController extends Controller
                 ->join('employees', 'employees.id', '=', 'merchandiser_informations.employee_id')
                 ->join('depots', 'depots.id', '=', 'mdr_attendances.depot_id')
                 ->orderBy('depots.name', 'asc');
+                //dd($AttendanceReport->toArray());
 
                 if($Depot_IDs){
                     //dd($Depot_IDs);

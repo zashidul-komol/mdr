@@ -111,7 +111,7 @@ tr { page-break-inside: avoid }
                         <tbody>
                             <?php $n=1 ?>
                             @foreach ($AttendanceReport as $key=>$data)
-                          <tr style="page-break-inside: avoid;">
+                          <tr style="page-break-inside: avoid; border: 10px;">
                             <td width="1%">{{$key+1}}</td>
                             <td align="left">{{$data->distributors->distributorName  ??  ''}}</td>
                             <td align="left">{{$data->mdrInformations->mdr_idcard  ??  ''}}</td>
