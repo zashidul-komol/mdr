@@ -40,10 +40,11 @@
             <li class="has-child-item{{ check_menu_active($current_location,['RequisitionsController']) }}">
                 <a><span>Manage Application</span></a>
                  <ul class="nav child-nav level-2">
-
+                    <!--
                     @if(isMenuRender('RequisitionsController@create',$menu_list))
                         <li @if($current_location=='RequisitionsController@create') class="active-item" @endif><a href="{{ route('requisitions.create',[]) }}">Apply Application</a></li>
                     @endif
+                    !-->
                     @if(isMenuRender('RequisitionsController@index',$menu_list))
                         <li @if($current_location=='RequisitionsController@index') class="active-item" @endif><a href="{{ route('requisitions.index',[]) }}">Application Lists</a></li>
                     @endif
@@ -57,13 +58,15 @@
             <li class="has-child-item{{ check_menu_active($current_location,['MDRAttendancesController']) }}">
                 <a><span>MDR Attendance</span></a>
                  <ul class="nav child-nav level-2">
-
+                   
                     @if(isMenuRender('MDRAttendancesController@create',$menu_list))
                         <li @if($current_location=='MDRAttendancesController@create') class="active-item" @endif><a href="{{ route('mdrattendances.create',[]) }}">Active MDR Attendance Entry</a></li>
                     @endif
+
                     @if(isMenuRender('MDRAttendancesController@inactiveMDRcreate',$menu_list))
                         <li @if($current_location=='MDRAttendancesController@inactiveMDRcreate') class="active-item" @endif><a href="{{ route('mdrattendances.inactiveMDRcreate',[]) }}">Inactive MDR Attendance Entry</a></li>
                     @endif
+
                     @if(isMenuRender('MDRAttendancesController@index',$menu_list))
                         <li @if($current_location=='MDRAttendancesController@index') class="active-item" @endif><a href="{{ route('mdrattendances.index',[]) }}">Attendance View</a></li>
                     @endif

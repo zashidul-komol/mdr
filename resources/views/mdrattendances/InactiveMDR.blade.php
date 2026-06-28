@@ -341,14 +341,23 @@ function getAmount(id, inactiveDate){
     let CurMonthlyFridayCount  = (specificNumberOfFriday_month - specificNumberOfFriday_new);
     //alert(CurMonthlyFridayCount);
 
-    let CurWorkingDays = parseFloat(((CurPayableDays - CurMonthlyFridayCount) - Monthly_Total_Holidays) + (authorized_leave + unauthorized_leave + eid_duty + weekly_holiday + govt_holiday));
+    let CurWorkingDays = parseFloat(
+                        CurPayableDays
+                        - CurMonthlyFridayCount
+                        - unauthorized_leave
+                        - authorized_leave
+                        + eid_duty
+                        + weekly_holiday
+                        + govt_holiday
+                    );
+    
     //alert(CurWorkingDays);
     //alert(Monthly_Total_Holidays);
 
     // Get year, month, and day part from the date
     if(CurPayableDays > 15){
         if(CurPayableDays >= CurWorkingDays){
-            $('#working_days'+id).val(((CurPayableDays - CurMonthlyFridayCount) - (Monthly_Total_Holidays +unauthorized_leave) + (authorized_leave + unauthorized_leave + eid_duty + weekly_holiday + govt_holiday)));
+            $('#working_days'+id).val(((CurPayableDays - CurMonthlyFridayCount) - (authorized_leave + unauthorized_leave) + (eid_duty + weekly_holiday + govt_holiday)));
         }else{
             alert('Working Days shall not be greater than the Payable Days.....1');
 
@@ -357,7 +366,17 @@ function getAmount(id, inactiveDate){
     }else{
         //alert('Komol');
         if(CurPayableDays >= CurWorkingDays){
-            $('#working_days'+id).val(parseFloat((CurPayableDays - CurMonthlyFridayCount - unauthorized_leave) + (authorized_leave + eid_duty + weekly_holiday + govt_holiday )));
+            $('#working_days' + id).val(
+                    parseFloat(
+                        CurPayableDays
+                        - CurMonthlyFridayCount
+                        - unauthorized_leave
+                        - authorized_leave
+                        + eid_duty
+                        + weekly_holiday
+                        + govt_holiday
+                    )
+                );
         }else{
             alert('Working Days shall not be greater than the Payable Days.....2');
             
