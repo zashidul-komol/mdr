@@ -1,9 +1,9 @@
 <div class="col-md-6">
-    
+    <!--
     <span class="pull-left">
             <a class="btn btn-success btn-left-side" href="{{ route('requisitions.create',[]) }}">Application form for MDR</a>
     </span>
-    
+    -->
     <h4 class="section-subtitle"><b>MDR Application Status</b> At A Glance</h4>
     <div class="panel">
            <div class="row dash-box-height SixBox">
