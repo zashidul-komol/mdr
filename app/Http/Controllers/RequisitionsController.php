@@ -1047,6 +1047,9 @@ class RequisitionsController extends Controller {
 	            'depot'=>function($q){
 	                return $q->select('*');
 	            },
+	            'mdrInformation'=>function($q){
+	                return $q->select('*');
+	            },
 	        ])
 	        ->where('status', 'approved')
 	        ->orderBy('id', 'desc')

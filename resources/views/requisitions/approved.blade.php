@@ -47,6 +47,8 @@
                         <th width="25%">Distributor Name</th>
                         <th width="25%">Applicant Name</th>
                         <th width="15%">Applicant Education</th>
+                        <th width="15%">Salary</th>
+                        <th width="15%">Rocket Number</th>
                         <th width="15%">Effective Date</th>
                         <th width="5%">Action</th>
                       </tr>
@@ -63,6 +65,8 @@
                         <td>{{$data->distributor->distributorName  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_name  ??  ''}}</td>
                         <td>{{$data->application_details[0]->applicant_education  ??  ''}}</td>
+                        <td>{{$data->mdrInformation->basic_salary  ??  ''}}</td>
+                        <td>{{$data->mdrInformation->applicant_mobile  ??  ''}}</td>
                         <td>{{$data->application_details[0]->effectivedate  ??  ''}}</td>
                         <td>                               
                             <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->id }})"></a>  
