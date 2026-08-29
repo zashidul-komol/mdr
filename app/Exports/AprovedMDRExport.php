@@ -48,6 +48,7 @@ class AprovedMDRExport implements FromQuery, WithMapping, WithHeadings, ShouldAu
                     'mdr_informations.nid',
                     'mdr_informations.effectivedate',
                     'mdr_informations.inactiveDate',
+                    'mdr_informations.basic_salary',
                     'depots.name as DepotName',
                     'regions.name as RegionName',
                     'employees.name as EmployeeName',
@@ -86,7 +87,8 @@ class AprovedMDRExport implements FromQuery, WithMapping, WithHeadings, ShouldAu
             'MDR ID No',
             'MDR Name',
             'MDR NID',
-            'Effective Date',           
+            'Effective Date', 
+            'Basic Salary',          
             'Rocket No',
             'Status',
             'Resing Date'            
@@ -112,6 +114,7 @@ class AprovedMDRExport implements FromQuery, WithMapping, WithHeadings, ShouldAu
             $employee->applicant_name,
             $employee->nid,
             $employee->effectivedate,
+            $employee->basic_salary,
             $employee->applicant_mobile,
             $employee->status,
             $employee->inactiveDate            

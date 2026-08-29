@@ -26,8 +26,9 @@ class Application extends Model {
 	public function depot() {
 		return $this->belongsTo(Depot::class, 'depot_id');
 	}
-	public function mdrInformation() {
-		return $this->hasMany(MdrInformation::class);
-	}
+	public function mdrInformation()
+    {
+        return $this->hasOne(MdrInformation::class, 'application_id', 'id');
+    }
 	
 }

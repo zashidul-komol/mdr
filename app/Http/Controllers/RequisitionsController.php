@@ -1038,22 +1038,15 @@ class RequisitionsController extends Controller {
 	      	//dd($New_Section_ID);
 	      	
 	    	$reportToApplications = Application::with([
-	            'distributor'=>function($q){
-	                return $q->select('*');
-	            },
-	            'region'=>function($q){
-	                return $q->select('*');
-	            },
-	            'depot'=>function($q){
-	                return $q->select('*');
-	            },
-	            'mdrInformation'=>function($q){
-	                return $q->select('*');
-	            },
-	        ])
-	        ->where('status', 'approved')
-	        ->orderBy('id', 'desc')
-	        ->get();
+		        'distributor',
+		        'region',
+		        'depot',
+		        'application_details',
+		        'mdrInformation',
+		    ])
+		    ->where('status', 'approved')
+		    ->orderBy('id', 'desc')
+		    ->get();
 
 	    //dd($reportToApplications->toArray());
         return view('requisitions.approved', compact('reportToApplications'));

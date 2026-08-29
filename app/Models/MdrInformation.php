@@ -7,8 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class MdrInformation extends Model
 {
     public $timestamps = false;
-    protected $guarded = array('id');
+
+    protected $guarded = ['id'];
+
     protected $table = 'mdr_informations';
+
+
+    //protected $guarded = array('id');
+
     public function distributors() {
         return $this->belongsTo(Distributor::class, 'distributor_id');
     }
