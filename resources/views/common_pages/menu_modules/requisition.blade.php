@@ -40,7 +40,7 @@
             <li class="has-child-item{{ check_menu_active($current_location,['RequisitionsController']) }}">
                 <a><span>Manage Application</span></a>
                  <ul class="nav child-nav level-2">
-                   <!-- 
+                    
                     @if(isMenuRender('RequisitionsController@create',$menu_list))
                         <li @if($current_location=='RequisitionsController@create') class="active-item" @endif><a href="{{ route('requisitions.create',[]) }}">Apply Application</a></li>
                     @endif
@@ -48,7 +48,7 @@
                     @if(isMenuRender('RequisitionsController@index',$menu_list))
                         <li @if($current_location=='RequisitionsController@index') class="active-item" @endif><a href="{{ route('requisitions.index',[]) }}">Application Lists</a></li>
                     @endif
-                    -->
+                    
                 </ul>
             </li>
         @endif
