@@ -38,8 +38,8 @@
                         <thead>
                       <tr>
                         <th width="5%">SI NO.</th>
-                        <th width="10%">Application No.</th>
-                        <th width="10%">MDR ID</th>
+                        <th width="7%">Application No.</th>
+                        <th width="13%">MDR ID</th>
                         <th width="25%">Region Name</th>
                         <th width="25%">Depot Name</th>
                         <th width="25%">DB Code</th>
@@ -56,7 +56,7 @@
                       <tr>
                         <td>{{$i}}</td>
                         <td>{{$data->id}}</td>
-                        <td>{{$data->mdrInformation[0]->mdr_idcard  ??  ''}}</td>
+                        <td>{{$data->mdrInformation->mdr_idcard ?? '' }}</td>
                         <td>{{$data->region->name  ??  ''}}</td>
                         <td>{{$data->depot->name  ??  ''}}</td>
                         <td>{{$data->distributor->dbcode  ??  ''}}</td>
