@@ -55,7 +55,7 @@
                       <tr>
                         <td>{{$i}}</td>
                         <td>{{$data->id}}</td>
-                        <td>{{$data->mdrInformation[0]->mdr_idcard  ??  ''}}</td>
+                        <td>{{$data->mdrInformation->mdr_idcard ?? '' }}</td>
                         <td>{{$data->region->name  ??  ''}}</td>
                         <td>{{$data->depot->name  ??  ''}}</td>
                         <td>{{$data->distributor->dbcode  ??  ''}}</td>
