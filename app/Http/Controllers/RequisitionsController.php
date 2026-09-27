@@ -59,37 +59,35 @@ class RequisitionsController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index() {
-			$user_id = auth()->user()->id;
-	      	$reportToApplications = Application::with([
-	            'application_details'=>function($q){
-	                return $q->select('*');
-	            },
-	            'user'=>function($q){
-	                return $q->select('*');
-	            },
-	            'distributor'=>function($q){
-	                return $q->select('*');
-	            },
-	            'region'=>function($q){
-	                return $q->select('*');
-	            },
-	            'depot'=>function($q){
-	                return $q->select('*');
-	            },
-	            
+	public function index()
+	{
+	    $user_id = auth()->user()->id;
 
-	        ])
-	        ->where('report_to',$user_id)
-	        ->where('status', 'pending')
-	        ->where('application_status','<>', 'return')
-	        ->get(); 
+	    $reportToApplications = Application::with([
+	        'application_details',
+	        'mdrInformation',
+	        'employee',
+	        'user',
+	        'distributor',
+	        'region',
+	        'depot'
+	    ])
+	    ->where('report_to', $user_id)
+	    ->where('status', 'pending')
+	    ->where('application_status', '<>', 'return')
+	    ->get();
 
-	    //dd($reportToApplications->toArray());
+	    //dd($reportToApplications->map(function ($data) {
+		//    return [
+		//        'application_id' => $data->id,
+		//        'mdr_data' => $data->mdrInformation,
+		//        'mdr_idcard' => $data->mdrInformation?->mdr_idcard,
+		//    ];
+		//})->toArray());
 
-	           
-        return view('requisitions.index', compact('reportToApplications'));
-        //return view('requisitions.index');
+	    // dd($reportToApplications->toArray());
+
+	    return view('requisitions.index', compact('reportToApplications'));
 	}
 
 	/**
