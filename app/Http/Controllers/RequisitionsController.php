@@ -206,10 +206,7 @@ class RequisitionsController extends Controller {
         ->where('id',$authUser)
         ->get();
 		$data = $request->except('_token');
-		//dd($data);
-		
-		//dd($usersInfo->toArray());
-		//dd($data);
+
 		$fileName = null;
 		$applicantCV = null;
 		$certificate = null;
@@ -220,7 +217,7 @@ class RequisitionsController extends Controller {
 			$fileName = time().'_img.'.$file->getClientOriginalExtension();
 			$file->storeAs('applicantImages', $fileName, 'public');
 
-			$data['applicant_image'] = $fileName; // or 'applicantImages/'.$fileName
+			$data['applicant_image'] = $fileName; // or 
 		}
 
 		if ($request->hasFile('applicant_cv')) {
@@ -249,7 +246,6 @@ class RequisitionsController extends Controller {
 	        $Region_ID = Employee::where('id', $user_data->employee_id)->first();
 	        $region = $Region_ID->region_id;
 	        $DepotID = $Region_ID->depot_id;
-	        //dd($DepotID);
 	        $reporting_sequence	= ReportingSequenceDetail::where('user_id', auth()->user()->id)
 	        ->where('sequence', '=', 1)
 	        ->value('report_to');
@@ -280,9 +276,6 @@ class RequisitionsController extends Controller {
 	        $day = $date[2];
 
 	        $MDR_IDCARD  = 'MDR'.$year.$month.$applicationData->id ;
-			//dd($MDR_ID);
-
-	        //dd($applicationData);
 	        //insert data in ApplicationDetails table
 	        
 	        if ($applicationData) {
