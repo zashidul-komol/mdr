@@ -103,7 +103,10 @@ class TadaReportingsequencesController extends Controller
             $sequence++;
         }
         
-        $reportingSequenceDetails = $reportingSequence->TadaReportingSequenceDetail()->createMany($detials_data);
+        $reportingSequenceDetails = $reportingSequence
+            ->tada_reportingsequence_details()
+            ->createMany($detials_data);
+
         if ($reportingSequenceDetails) {
             $message = "You have successfully created";
             return redirect()->route('tada_reportingsequences.create')
@@ -129,15 +132,25 @@ class TadaReportingsequencesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
-        //
-        $where = array('idcablelists' => $id);
-        $data['cablelists_info'] = Cablelist::where($where)->first();
-        $cablenames = Cablename::with('cablelist')->select(['cablelistscol', 'idcablelists'])->get();
+        $tada_reportingsequence = TadaReportingSequence::with([
+            'user',
+            'tada_reportingsequence_details'
+        ])->findOrFail($id);
 
-        return view('cablelist.edit', $data)->with('cablenames', $cablenames);
+        $users = User::where('id', '!=', $tada_reportingsequence->user_id)
+            ->orderBy('name')
+            ->pluck('name', 'id')
+            ->toArray();
+
+        return view(
+            'tada_reportingsequences.edit',
+            compact('tada_reportingsequence', 'users')
+        );
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -145,22 +158,64 @@ class TadaReportingsequencesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-        //
-        //https://w3path.com/laravel-6-tutorial-build-your-first-crud-app-with-laravel/
         $request->validate([
-          'typeofmachine_id.*' => 'required',
-          'cablename_id.*' => 'required',
-          'lengh.*' => 'required',
+            'details' => 'required|array|min:1',
+            'details.*.report_to' => 'required|integer|exists:users,id',
         ]);
-        $update = [ 'typeofmachine_id'=> $request->typeofmachine_id, 
-        'cablename_id' => $request->cablename_id, 'lengh'=> $request->lengh];
 
-      Cablelist::where('idcablelists',$id)->update($update);
-        return Redirect::to('cablelists')
-       ->with('success','Great! Cablelist updated successfully');
+        $tada_reportingsequence = TadaReportingSequence::findOrFail($id);
+
+        $reportToUsers = collect($request->input('details'))
+            ->pluck('report_to')
+            ->map(fn ($userId) => (int) $userId);
+
+        // Prevent duplicate Reporting To users
+        if ($reportToUsers->count() !== $reportToUsers->unique()->count()) {
+            return back()
+                ->withErrors([
+                    'details' => 'Duplicate Reporting To users are not allowed.'
+                ])
+                ->withInput();
+        }
+
+        // Prevent self-reporting
+        if ($reportToUsers->contains((int) $tada_reportingsequence->user_id)) {
+            return back()
+                ->withErrors([
+                    'details' => 'A user cannot report to themselves.'
+                ])
+                ->withInput();
+        }
+
+        DB::transaction(function () use ($request, $tada_reportingsequence) {
+
+            // Delete existing reporting sequence details
+            $tada_reportingsequence->tada_reportingsequence_details()->delete();
+
+            $sequence = 1;
+
+            // Insert updated reporting sequence details
+            foreach ($request->input('details') as $detail) {
+
+                $tada_reportingsequence->tada_reportingsequence_details()->create([
+                    'user_id'   => $tada_reportingsequence->user_id,
+                    'report_to' => $detail['report_to'],
+                    'sequence'  => $sequence,
+                ]);
+
+                $sequence++;
+            }
+        });
+
+        return redirect()
+            ->route('tada_reportingsequences.index')
+            ->with('flash_success', 'TA/DA Reporting Sequence updated successfully.');
     }
+
+
     /**
      * Remove the specified resource from storage.
      *

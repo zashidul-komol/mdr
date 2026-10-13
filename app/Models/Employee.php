@@ -33,6 +33,10 @@ class Employee extends Model
     public function user() {
         return $this->hasOne(User::class);
     }
+    public function depot()
+    {
+        return $this->belongsTo(Depot::class, 'depot_id');
+    }
 	 
 	 
 }

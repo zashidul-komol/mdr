@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ReportingSequence;
 use App\Models\User;
+use App\Models\Depot;
 use App\Models\Department;
 use App\ReportingSequenceDetail;
 use Illuminate\Support\Facades\DB;
@@ -20,22 +21,14 @@ class ReportingsequencesController extends Controller
     public function index()
     {
         $reportingsequences = ReportingSequence::with([
-            'user'=>function($q){
-                return $q->select('*');
-            },
-            'user.designation'=>function($q){
-                return $q->select('id', 'title');
-            },
-            'user.department'=>function($q){
-                return $q->select('id', 'name');
-            },
-            'user.section'=>function($q){
-                return $q->select('id', 'name');
-            },
-        ])
-        ->get();
-        //dd($reportingsequences->toArray());
-        //$reportingsequences = ReportingSequence::get();
+            'user',
+            'user.designation',
+            'user.department',
+            'user.section',
+            'user.employee.region',
+            'user.employee.depot',
+        ])->get();
+
         return view('reportingsequences.index', compact('reportingsequences'));
     }
 
@@ -129,12 +122,17 @@ class ReportingsequencesController extends Controller
      */
     public function edit($id)
     {
-        //
-        $where = array('idcablelists' => $id);
-        $data['cablelists_info'] = Cablelist::where($where)->first();
-        $cablenames = Cablename::with('cablelist')->select(['cablelistscol', 'idcablelists'])->get();
+        $reportingsequence = ReportingSequence::with([
+            'user',
+            'reportingsequence_details'
+        ])->findOrFail($id);
 
-        return view('cablelist.edit', $data)->with('cablenames', $cablenames);
+        $users = User::pluck('name', 'id');
+
+        return view(
+            'reportingsequences.edit',
+            compact('reportingsequence', 'users')
+        );
     }
     /**
      * Update the specified resource in storage.
@@ -145,19 +143,58 @@ class ReportingsequencesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        //https://w3path.com/laravel-6-tutorial-build-your-first-crud-app-with-laravel/
         $request->validate([
-          'typeofmachine_id.*' => 'required',
-          'cablename_id.*' => 'required',
-          'lengh.*' => 'required',
+            'details' => 'required|array|min:1',
+            'details.*.report_to' => 'required|integer|exists:users,id',
         ]);
-        $update = [ 'typeofmachine_id'=> $request->typeofmachine_id, 
-        'cablename_id' => $request->cablename_id, 'lengh'=> $request->lengh];
 
-      Cablelist::where('idcablelists',$id)->update($update);
-        return Redirect::to('cablelists')
-       ->with('success','Great! Cablelist updated successfully');
+        $reportingSequence = ReportingSequence::findOrFail($id);
+
+        $details = $request->input('details');
+
+        // Check duplicate Reporting To users
+        $reportToUsers = array_column($details, 'report_to');
+
+        if (count($reportToUsers) !== count(array_unique($reportToUsers))) {
+            return back()
+                ->withErrors([
+                    'details' => 'Duplicate Reporting To users are not allowed.'
+                ])
+                ->withInput();
+        }
+
+        // Prevent self-reporting
+        if (in_array($reportingSequence->user_id, $reportToUsers)) {
+            return back()
+                ->withErrors([
+                    'details' => 'A user cannot report to themselves.'
+                ])
+                ->withInput();
+        }
+
+        DB::transaction(function () use ($reportingSequence, $details) {
+
+            // Delete old reporting sequence details
+            $reportingSequence->reportingsequence_details()->delete();
+
+            // Insert updated details
+            $sequence = 1;
+
+            foreach ($details as $detail) {
+
+                $reportingSequence->reportingsequence_details()->create([
+                    'user_id' => $reportingSequence->user_id,
+                    'report_to' => $detail['report_to'],
+                    'sequence' => $sequence,
+                ]);
+
+                $sequence++;
+            }
+        });
+
+        return redirect()
+            ->route('reportingsequences.index')
+            ->with('flash_success', 'Reporting Sequence updated successfully.');
     }
     /**
      * Remove the specified resource from storage.

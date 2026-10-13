@@ -12,9 +12,17 @@ class TadaReportingSequence extends Model
 	protected $guarded = array('id');
 	protected $table = 'tada_reporting_sequences';
 
-	public function tada_reportingsequence_details() {
-		return $this->hasMany(TadaReportingSequenceDetail::class);
+
+	public function tada_reportingsequence_details()
+	{
+	    return $this->hasMany(
+	        TadaReportingSequenceDetail::class,
+	        'reporting_sequence_id',
+	        'id'
+	    );
 	}
+
+
 	public function user() {
 		return $this->belongsTo(User::class);
 	}

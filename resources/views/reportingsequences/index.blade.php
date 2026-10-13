@@ -26,6 +26,8 @@
                       <tr>
                         <th>SI NO.</th>
                         <th>User Name</th>
+                        <th>Region Name</th>
+                        <th>Depot Name</th>
                         <th>Designation</th>
                         <th>Dept. Name</th>
                         <th>Section Name</th>
@@ -38,11 +40,17 @@
                       <tr>
                         <td>{{$i}}</td>
                       	<td>{{$data->user->name  ??  ''}}</td>
+                        <td>{{ $data->user->employee->region->name ?? '' }}</td>
+                        <td>{{ $data->user->employee->depot->name ?? '' }}</td>
                         <td>{{$data->user->designation->title  ??  ''}}</td>
                         <td>{{$data->user->department->name  ??  ''}}</td>
                         <td>{{$data->user->section->name  ??  ''}}</td>
                         <td>                               
-                            <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->user->id }})"></a>                          
+                            <a class="fa fa-eye fa-x" style="cursor:pointer" onclick="showModal({{ $data->user->id }})"></a>
+                                <a href="{{     route('reportingsequences.edit', $data->id) }}"
+                                   class="btn btn-primary btn-sm">
+                                    <i class="fa fa-edit"></i>
+                                </a>                         
                         </td>
                       </tr>
                         @php ($i=$i+1)
